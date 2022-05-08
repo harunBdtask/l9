@@ -11,9 +11,7 @@
         <link rel="shortcut icon" href="{{asset('assets')}}/dist/img/favicon.png">
         <!--Global Styles(used by all pages)-->
         <link href="{{asset('assets')}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-        <!--<link href="{{asset('assets')}}/plugins/bootstrap/css/rtl/bootstrap-rtl.min.css" rel="stylesheet">-->
         <link href="{{asset('assets')}}/plugins/metisMenu/metisMenu.css" rel="stylesheet">
-        <!--<link href="{{asset('assets')}}/plugins/metisMenu/metisMenu-rtl.css" rel="stylesheet">-->
         <link href="{{asset('assets')}}/plugins/fontawesome/css/all.min.css" rel="stylesheet">
         <link href="{{asset('assets')}}/plugins/typicons/src/typicons.min.css" rel="stylesheet">
         <link href="{{asset('assets')}}/plugins/themify-icons/themify-icons.min.css" rel="stylesheet">
