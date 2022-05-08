@@ -49,23 +49,32 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <form >
-                        <input type="hidden" name="HeadName" id="HeadName" class="form-control" required="required" />
+                    <form name="form" id="form" action="#" method="post" enctype="multipart/form-data">
                         <div id="newData">
                             <table width="100%" border="0" cellspacing="0" cellpadding="5">
 
                                 <tr>
-                                    <td><?php echo get_phrases(['directory', 'name']); ?></td>
-                                    <td><input type="text" name="txtHeadName" id="txtHeadName" class="form-control" /></td>
+                                    <td><?php echo get_phrases(['head', 'code']); ?></td>
+                                    <td><input type="text" name="txtHeadCode" id="txtHeadCode" class="form-control" readonly="readonly" /></td>
                                 </tr>
                                 <tr>
-                                    <td><?php echo get_phrases(['parent', 'directory']); ?></td>
+                                    <td><?php echo get_phrases(['head', 'name']); ?></td>
+                                    <td><input type="text" name="txtHeadName" id="txtHeadName" class="form-control" />
+                                        <input type="hidden" name="HeadName" id="HeadName" class="form-control" required="required" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo get_phrases(['parent', 'head']); ?></td>
                                     <td><input type="text" name="txtPHead" id="txtPHead" class="form-control" readonly="readonly" /></td>
                                 </tr>
                                 <tr>
-                                    <td></td>
-                                    <td><button class="btn btn-success actionBtn"></button></td>
-                                    
+
+                                    <td><?php echo get_phrases(['head', 'label']); ?></td>
+                                    <td><input type="text" name="txtHeadLevel" id="txtHeadLevel" class="form-control" readonly="readonly" /></td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo get_phrases(['head', 'type']); ?></td>
+                                    <td><input type="text" name="txtHeadType" id="txtHeadType" class="form-control" readonly="readonly" /></td>
                                 </tr>
 
                             </table>
@@ -83,38 +92,81 @@
 <script>
     function loadData(id) {
         console.log(id);
-        $('.actionBtn').show();
-        $('.actionBtn').text('Add');
-        $('#txtPHead').val(id);
-        if (id == 'directory') {
-        }else{
-
-        }
         
     }
 
+    function newdata(id) {
+        $.ajax({
+            url: _baseURL + 'account/accounts/newForm/' + id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var headlabel = data.headlabel;
+                $('#txtHeadCode').val(data.headcode);
+                document.getElementById("txtHeadName").value = '';
+                $('#txtPHead').val(data.rowdata.HeadName);
+                $('#txtPHeadCode').val(data.rowdata.HeadCode);
+                $('#txtHeadLevel').val(headlabel);
+                $(".select2").select2();
+                $('#btnSave').prop("disabled", false);
+                $('#btnSave').show();
+                // $('#btnUpdate').hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error get data from ajax');
+            }
+        });
+    }
+
+    /*chart of account subtype*/
+    function isSubType_change(stype) {
+        if ($('#' + stype).is(":checked")) {
+            $.ajax({
+                url: _baseURL + "account/accounts/getsubtype/",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    if (data == "") {
+                        $('#subtypeContent').html('');
+                        $('#subtypeContent').hide();
+                    } else {
+                        $('#subtypeContent').html(data);
+                        $('#subtypeContent').show();
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error get data from ajax');
+                }
+            });
+        } else {
+            $('#subtypeContent').html('');
+            $('#subtypeContent').hide();
+        }
+    }
 
     $('document').ready(function() {
         "use strict";
-        $('.actionBtn').hide();
 
-        $('.actionBtn').click(function (e) {
-            e.preventDefault();
-            var txtPHead = $('#txtPHead').val();
-            var txtHeadName = $('#txtHeadName').val();
-            $.ajax({
-                url: "{{ route('project.store') }}",
-                type: "POST",
-                dataType: 'json',
-                data: {
-                    '_token':"{{ csrf_token() }}",
-                    'txtPHead':txtPHead,
-                    'txtHeadName':txtHeadName,
-                },
-                success: function(data) {
-                    location.reload();
-                }
-            });
+        $("#IsTransaction").change(function() {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).prop("checked", true);
+                $("#IsTransaction").val(1);
+            } else {
+                $(this).prop("checked", false);
+                $("#IsTransaction").val('');
+            }
+        });
+
+        $("#IsGL").change(function() {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).prop("checked", true);
+                $("#IsGL").val(1);
+            } else {
+                $(this).prop("checked", false);
+                $("#IsGL").val('');
+            }
         });
 
     });
