@@ -51,16 +51,16 @@ class ProjectController extends Controller
     public function dfsNew($HeadName, $directories)
     {
         $tree = '<ul>';
-        $tree .= "<li class=\"jstree-open\">$HeadName";
+        $tree .= "<li onclick=\"loadData('" . $HeadName . "')\" class=\"jstree-open\">$HeadName";
         if (count($directories) > 0) {
             $tree .= "<ul>";
             foreach ($directories as $key => $value) {
-                $tree .= "<li onclick=\"loadData('" . $key . "')\">$value";
+                $tree .= "<li onclick=\"loadData('" . $value . "')\">$value";
                 $check_dir = $this->checkDirectory($value);
                 if (count($check_dir) > 0) {
                     $tree .= "<ul>";
                     foreach ($check_dir as $k => $val) {
-                        $tree .= "<li onclick=\"loadData('" . $k . "')\">$val</li>";
+                        $tree .= "<li onclick=\"loadData('" . $val . "')\">$val</li>";
                     }
                     $tree .= "</ul>";
                 }
@@ -130,7 +130,15 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $txtHeadName = $request->txtHeadName;
+        $txtPHead = $request->txtPHead;
+        if ($txtPHead == 'directory') {
+            $path = public_path() . '/directory' . '/' . $txtHeadName;
+        }else{
+            $path = public_path() . '/directory' . '/' . $txtPHead . '/' . $txtHeadName;
+        }
+        File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+        return 1;
     }
 
     /**
