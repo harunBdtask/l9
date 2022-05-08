@@ -102,5 +102,7 @@
         <script src="{{asset('assets')}}/dist/js/pages/tree-view.active.js"></script>
         <!--Page Scripts(used by all page)-->
         <script src="{{asset('assets')}}/dist/js/sidebar.js"></script>
+        @stack('scripts')
+        <!--end::Page Scripts-->
     </body>
 </html>

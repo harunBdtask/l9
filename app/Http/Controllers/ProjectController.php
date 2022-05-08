@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Project;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\Storage;
 
 class ProjectController extends Controller
 {
@@ -14,27 +16,107 @@ class ProjectController extends Controller
      */
     public function home()
     {
+        $directories = $this->showDirectories();
         $data = array(
-            'title'      => 'Tree View',
-            'content'   => 'tree'
+            'title' => 'Tree View',
+            'content'   => 'tree',
+            'trees' => $this->dfsNew('directory', $directories),
         );
-        return view('layouts',$data);
+        return view('layouts', $data);
     }
 
     public function index()
     {
-        $data = array(
-            'menu'      => '',
-            'content'   => 'tree'
-        );
-        return view('layouts',$data);
+        //
     }
+
+    public function showFiles()
+    {
+        $files = Storage::disk('public-folder')->allFiles('directory');
+        dd($files);
+    }
+
+    public function showDirectories()
+    {
+        $directories = Storage::disk('public-folder')->directories('directory');
+        return $directories;
+    }
+
+    public function checkDirectory($path)
+    {
+        $directories = Storage::disk('public-folder')->directories($path);
+        return $directories;
+    }
+
+    public function dfsNew($HeadName, $directories)
+    {
+        $tree = '<ul>';
+        $tree .= "<li class=\"jstree-open\">$HeadName";
+        if (count($directories) > 0) {
+            $tree .= "<ul>";
+            foreach ($directories as $key => $value) {
+                $tree .= "<li onclick=\"loadData('" . $key . "')\">$value";
+                $check_dir = $this->checkDirectory($value);
+                if (count($check_dir) > 0) {
+                    $tree .= "<ul>";
+                    foreach ($check_dir as $k => $val) {
+                        $tree .= "<li onclick=\"loadData('" . $k . "')\">$val</li>";
+                    }
+                    $tree .= "</ul>";
+                }
+            }
+            $tree .= "</li></ul>";
+        }
+        $tree .= "</li>";
+        $tree .= "</ul>";
+        return $tree;
+    }
+
+    public function FunctionName()
+    {
+        $dir = public_path() . '/directory';
+        $it = new \RecursiveDirectoryIterator($dir);
+        $display = Array ( 'jpeg', 'jpg' );
+        foreach(new \RecursiveIteratorIterator($it) as $file)
+        {
+            echo $file . "<br/> \n";
+            // if (in_array(strtolower(array_pop(explode('.', $file))), $display))
+        }
+    }
+
+    
+    public function hdfghdfghfghdfs($HeadName, $directories)
+    {
+        $tree = '<ul>';
+        $tree .= "<li>$HeadName";
+        if (count($directories) > 0) {
+            $tree .= "<ul>";
+            for ($i=0; $i < count($directories); $i++) { 
+                $tree .= "<li>$directories[$i]</li>";
+                $check_dir= $this->checkDirectory($directories[$i]);
+                // print_r($check_dir);
+                $this->dfsNew($directories[$i],$check_dir);
+            }
+            $tree .= "</ul>";
+        }
+        $tree .= "</li>";
+        $tree .= "</ul>";
+        return $tree;
+    }
+
+
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
+    public function createDirectory()
+    {
+        $path = public_path() . '/directory/images';
+        File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+    }
+
     public function create()
     {
         //

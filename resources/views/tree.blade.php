@@ -44,33 +44,131 @@
                 <div class="col-sm-6">
                     <div class="card card-body shadow-none mb-4">
                         <div id="html" class="demo">
-                            <ul>
-                                <li data-jstree='{ "opened" : true }'>Root node
-                                    <ul>
-                                        <li data-jstree='{ "selected" : true }'>Child node 1</li>
-                                        <li>Child node 2</li>
-                                    </ul>
-                                </li>
-                                <li>Company Maintenance</li>
-                                <li>Employees
-                                    <ul>
-                                        <li>Reports
-                                            <ul>
-                                                <li>Report1</li>
-                                                <li>Report2</li>
-                                                <li>Report3</li>
-                                            </ul>
-                                        </li>
-                                        <li>Employee Maint.</li>
-                                    </ul>
-                                </li>
-                                <li>Human Resources</li>
-                            </ul>
+                            {!! $trees !!}
                         </div>
                     </div>
+                </div>
+                <div class="col-sm-6">
+                    <form name="form" id="form" action="#" method="post" enctype="multipart/form-data">
+                        <div id="newData">
+                            <table width="100%" border="0" cellspacing="0" cellpadding="5">
+
+                                <tr>
+                                    <td><?php echo get_phrases(['head', 'code']); ?></td>
+                                    <td><input type="text" name="txtHeadCode" id="txtHeadCode" class="form-control" readonly="readonly" /></td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo get_phrases(['head', 'name']); ?></td>
+                                    <td><input type="text" name="txtHeadName" id="txtHeadName" class="form-control" />
+                                        <input type="hidden" name="HeadName" id="HeadName" class="form-control" required="required" />
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo get_phrases(['parent', 'head']); ?></td>
+                                    <td><input type="text" name="txtPHead" id="txtPHead" class="form-control" readonly="readonly" /></td>
+                                </tr>
+                                <tr>
+
+                                    <td><?php echo get_phrases(['head', 'label']); ?></td>
+                                    <td><input type="text" name="txtHeadLevel" id="txtHeadLevel" class="form-control" readonly="readonly" /></td>
+                                </tr>
+                                <tr>
+                                    <td><?php echo get_phrases(['head', 'type']); ?></td>
+                                    <td><input type="text" name="txtHeadType" id="txtHeadType" class="form-control" readonly="readonly" /></td>
+                                </tr>
+
+                            </table>
+                        </div>
+                    </form>
+                    <br>
                 </div>
             </div>
         </div>
     </div>
 </div>
 <!--/.body content-->
+
+@push('scripts')
+<script>
+    function loadData(id) {
+        console.log(id);
+        
+    }
+
+    function newdata(id) {
+        $.ajax({
+            url: _baseURL + 'account/accounts/newForm/' + id,
+            type: "GET",
+            dataType: "json",
+            success: function(data) {
+                var headlabel = data.headlabel;
+                $('#txtHeadCode').val(data.headcode);
+                document.getElementById("txtHeadName").value = '';
+                $('#txtPHead').val(data.rowdata.HeadName);
+                $('#txtPHeadCode').val(data.rowdata.HeadCode);
+                $('#txtHeadLevel').val(headlabel);
+                $(".select2").select2();
+                $('#btnSave').prop("disabled", false);
+                $('#btnSave').show();
+                // $('#btnUpdate').hide();
+            },
+            error: function(jqXHR, textStatus, errorThrown) {
+                alert('Error get data from ajax');
+            }
+        });
+    }
+
+    /*chart of account subtype*/
+    function isSubType_change(stype) {
+        if ($('#' + stype).is(":checked")) {
+            $.ajax({
+                url: _baseURL + "account/accounts/getsubtype/",
+                type: "GET",
+                dataType: "json",
+                success: function(data) {
+                    if (data == "") {
+                        $('#subtypeContent').html('');
+                        $('#subtypeContent').hide();
+                    } else {
+                        $('#subtypeContent').html(data);
+                        $('#subtypeContent').show();
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown) {
+                    alert('Error get data from ajax');
+                }
+            });
+        } else {
+            $('#subtypeContent').html('');
+            $('#subtypeContent').hide();
+        }
+    }
+
+    $('document').ready(function() {
+        "use strict";
+
+        $("#IsTransaction").change(function() {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).prop("checked", true);
+                $("#IsTransaction").val(1);
+            } else {
+                $(this).prop("checked", false);
+                $("#IsTransaction").val('');
+            }
+        });
+
+        $("#IsGL").change(function() {
+            var checked = $(this).is(':checked');
+            if (checked) {
+                $(this).prop("checked", true);
+                $("#IsGL").val(1);
+            } else {
+                $(this).prop("checked", false);
+                $("#IsGL").val('');
+            }
+        });
+
+    });
+</script>
+@endpush
