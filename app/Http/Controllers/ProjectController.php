@@ -102,6 +102,13 @@ class ProjectController extends Controller
         return $myArray[$cnt-1];
     }
 
+    public function strPop($str)
+    {
+        $stack = explode('/', $str);
+        array_pop($stack);
+        return implode("/",$stack);
+    }
+
 
 
     /**
@@ -115,16 +122,16 @@ class ProjectController extends Controller
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
     }
 
-    public function deleteDirectory()
+    public function deleteDirectory($directory)
     {
-        $path = public_path('directory/images');
+        $path = public_path($directory);
         return File::deleteDirectory($path);
     }
 
-    public function renameDirectory()
+    public function renameDirectory($old, $new)
     {
-        $oldpath = public_path() . '/directory/images';
-        $newpath = public_path() . '/directory/img';
+        $oldpath = public_path() . '/' . $old;
+        $newpath = public_path() . '/' . $new;
         rename($oldpath, $newpath);
     }
 
@@ -141,11 +148,21 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $action = $request->action;
         $txtHeadName = $request->txtHeadName;
         $txtPHead = $request->txtPHead;
         $path = public_path() . '/' . $txtPHead . '/' . $txtHeadName;
-        File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
-        return 1;
+        if ($action == 'create') {
+            File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+            return 1;
+        }elseif ($action == 'rename') {
+            $new = $this->strPop($txtPHead) . '/' . $txtHeadName;
+            $this->renameDirectory($txtPHead, $new);
+            return 2;
+        }elseif ($action == 'delete') {
+            $this->deleteDirectory($txtPHead);
+            return 3;
+        }
     }
 
     /**

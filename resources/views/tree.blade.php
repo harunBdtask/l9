@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <form >
+                    <form>
                         <input type="hidden" name="HeadName" id="HeadName" class="form-control" required="required" />
                         <div id="newData">
                             <table width="100%" border="0" cellspacing="0" cellpadding="5">
@@ -64,8 +64,12 @@
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td><button class="btn btn-success actionBtn"></button></td>
-                                    
+                                    <td>
+                                        <button class="btn btn-primary actionBtn">Create</button>
+                                        <button class="btn btn-success actionBtn2">Rename</button>
+                                        <button class="btn btn-danger actionBtn3">Delete</button>
+                                    </td>
+
                                 </tr>
 
                             </table>
@@ -82,35 +86,97 @@
 @push('scripts')
 <script>
     function loadData(id) {
-        $('.actionBtn').show();
-        $('.actionBtn').text('Add');
         $('#txtPHead').val(id);
-        
     }
 
-
-    $('document').ready(function() {
-        "use strict";
-        $('.actionBtn').hide();
-
-        $('.actionBtn').click(function (e) {
-            e.preventDefault();
-            var txtPHead = $('#txtPHead').val();
-            var txtHeadName = $('#txtHeadName').val();
+    function actionAjax(action) {
+        var txtPHead = $('#txtPHead').val();
+        var txtHeadName = $('#txtHeadName').val();
+        if (txtPHead != '') {
+            if (action != 'delete') {
+                if (txtHeadName == '') {
+                    alert('Invalid directory name !!');
+                    return;
+                }
+            }
+            if (action != 'create') {
+                if (txtPHead == 'directory') {
+                    alert('Invalid Attempt !! ');
+                    return;
+                }
+            }
             $.ajax({
                 url: "{{ route('project.store') }}",
                 type: "POST",
                 dataType: 'json',
                 data: {
-                    '_token':"{{ csrf_token() }}",
-                    'txtPHead':txtPHead,
-                    'txtHeadName':txtHeadName,
+                    '_token': "{{ csrf_token() }}",
+                    'txtPHead': txtPHead,
+                    'txtHeadName': txtHeadName,
+                    'action': action,
                 },
                 success: function(data) {
                     location.reload();
                 }
             });
+        } else {
+            alert('Invalid Attempt !! Select directory');
+            return;
+        }
+    }
+
+
+    $('document').ready(function() {
+        "use strict";
+
+        //create
+        $('.actionBtn').click(function(e) {
+            e.preventDefault();
+            var txtPHead = $('#txtPHead').val();
+            var nameArr = txtPHead.split('/');
+            if (nameArr.length > 4) {
+                alert('Max level directory exceeded !!');
+                return;
+            }
+            actionAjax('create');
+
         });
+
+        //rename
+        $('.actionBtn2').click(function(e) {
+            e.preventDefault();
+            actionAjax('rename');
+
+        });
+
+        //delete
+        $('.actionBtn3').click(function(e) {
+            e.preventDefault();
+
+            swal({
+                title: "Delete?",
+                text: "Please ensure and then confirm!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function(e) {
+
+                if (e.value === true) {
+                    actionAjax('delete');
+                } else {
+                    e.dismiss;
+                }
+
+            }, function(dismiss) {
+                return false;
+            })
+
+        });
+
+
+
 
     });
 </script>

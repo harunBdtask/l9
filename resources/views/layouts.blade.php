@@ -5,8 +5,9 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
-        <meta name="author" content="Bdtask">
+        <meta name="author" content="Bhulua">
         <title>{{$title}} Bhulua - Bootstrap 4 Admin Template Deshboard</title>
+        <meta name="csrf-token" content="{{ csrf_token() }}">
         <!-- App favicon -->
         <link rel="shortcut icon" href="{{asset('assets')}}/dist/img/favicon.png">
         <!--Global Styles(used by all pages)-->
@@ -50,7 +51,7 @@
                 </div><!--/.sidebar header-->
                 <div class="sidebar-body">
                     <nav class="sidebar-nav">
-                        <ul class="metismenu">
+                        <ul class="metismenu d-none">
                             <li class="nav-label">
                                 <span class="nav-label_text">Main Menu</span>
                                 <small class="ti-more-alt nav-label_ellipsis"></small>
@@ -84,8 +85,8 @@
                 </div><!--/.main content-->
                 <footer class="footer-content">
                     <div class="footer-text d-flex align-items-center justify-content-between">
-                        <div class="copy">© 2018 Bdtask Responsive Bootstrap 4 Dashboard Template</div>
-                        <div class="credit">Designed by: <a href="#">Bdtask</a></div>
+                        <div class="copy">© 2018 Responsive Bootstrap 4 Dashboard Template</div>
+                        <div class="credit">Designed by: <a href="#">Bhulua</a></div>
                     </div>
                 </footer><!--/.footer content-->
                 <div class="overlay"></div>
@@ -102,6 +103,10 @@
         <script src="{{asset('assets')}}/dist/js/pages/tree-view.active.js"></script>
         <!--Page Scripts(used by all page)-->
         <script src="{{asset('assets')}}/dist/js/sidebar.js"></script>
+        <!-- SweetAlert2 -->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.min.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/7.2.0/sweetalert2.all.min.js"></script>
+
         @stack('scripts')
         <!--end::Page Scripts-->
     </body>
