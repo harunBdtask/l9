@@ -82,14 +82,9 @@
 @push('scripts')
 <script>
     function loadData(id) {
-        console.log(id);
         $('.actionBtn').show();
         $('.actionBtn').text('Add');
         $('#txtPHead').val(id);
-        if (id == 'directory') {
-        }else{
-
-        }
         
     }
 

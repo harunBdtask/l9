@@ -15,6 +15,7 @@ use App\Http\Controllers\ProjectController;
 
 Route::get('/', [ProjectController::class, 'home'])->name('home');
 Route::get('/create_directory', [ProjectController::class, 'createDirectory'])->name('create_directory');
-Route::get('/show_directories', [ProjectController::class, 'FunctionName'])->name('show_directories');
+Route::get('/show_directories', [ProjectController::class, 'showFiles'])->name('show_directories');
+Route::get('/delete_directories', [ProjectController::class, 'renameDirectory'])->name('delete_directories');
 //ProjectController
 Route::resource('project', ProjectController::class);

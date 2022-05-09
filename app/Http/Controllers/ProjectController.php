@@ -51,18 +51,41 @@ class ProjectController extends Controller
     public function dfsNew($HeadName, $directories)
     {
         $tree = '<ul>';
-        $tree .= "<li onclick=\"loadData('" . $HeadName . "')\" class=\"jstree-open\">$HeadName";
+        $tree .= "<li class=\"jstree-open\"><span onclick=\"loadData('" . $HeadName . "')\">$HeadName</span>";
         if (count($directories) > 0) {
             $tree .= "<ul>";
-            foreach ($directories as $key => $value) {
-                $tree .= "<li onclick=\"loadData('" . $value . "')\">$value";
+            foreach ($directories as $value) {
+                //2ndlevel
+                $dir = $this->strSplit($value);
+                $tree .= "<li><span onclick=\"loadData('" . $value . "')\">$dir</span>";
                 $check_dir = $this->checkDirectory($value);
                 if (count($check_dir) > 0) {
                     $tree .= "<ul>";
-                    foreach ($check_dir as $k => $val) {
-                        $tree .= "<li onclick=\"loadData('" . $val . "')\">$val</li>";
+                    foreach ($check_dir as $val) {
+                        $dir_1 = $this->strSplit($val);
+                        $tree .= "<li><span onclick=\"loadData('" . $val . "')\">$dir_1</span>";
+                        //3rdlevel
+                        $check_dir2 = $this->checkDirectory($val);
+                        if (count($check_dir2) > 0) {
+                            $tree .= "<ul>";
+                            foreach ($check_dir2 as $val2) {
+                                $dir_2 = $this->strSplit($val2);
+                                $tree .= "<li><span onclick=\"loadData('" . $val2 . "')\">$dir_2</span>";
+                                //4thlevel
+                                $check_dir3 = $this->checkDirectory($val2);
+                                if (count($check_dir3) > 0) {
+                                    $tree .= "<ul>";
+                                    foreach ($check_dir3 as $val3) {
+                                        $dir_3 = $this->strSplit($val3);
+                                        $tree .= "<li><span onclick=\"loadData('" . $val3 . "')\">$dir_3</span>";
+                                    }
+                                    $tree .= "</li></ul>";
+                                }
+                            }
+                            $tree .= "</li></ul>";
+                        }
                     }
-                    $tree .= "</ul>";
+                    $tree .= "</li></ul>";
                 }
             }
             $tree .= "</li></ul>";
@@ -72,36 +95,11 @@ class ProjectController extends Controller
         return $tree;
     }
 
-    public function FunctionName()
+    public function strSplit($str)
     {
-        $dir = public_path() . '/directory';
-        $it = new \RecursiveDirectoryIterator($dir);
-        $display = Array ( 'jpeg', 'jpg' );
-        foreach(new \RecursiveIteratorIterator($it) as $file)
-        {
-            echo $file . "<br/> \n";
-            // if (in_array(strtolower(array_pop(explode('.', $file))), $display))
-        }
-    }
-
-    
-    public function hdfghdfghfghdfs($HeadName, $directories)
-    {
-        $tree = '<ul>';
-        $tree .= "<li>$HeadName";
-        if (count($directories) > 0) {
-            $tree .= "<ul>";
-            for ($i=0; $i < count($directories); $i++) { 
-                $tree .= "<li>$directories[$i]</li>";
-                $check_dir= $this->checkDirectory($directories[$i]);
-                // print_r($check_dir);
-                $this->dfsNew($directories[$i],$check_dir);
-            }
-            $tree .= "</ul>";
-        }
-        $tree .= "</li>";
-        $tree .= "</ul>";
-        return $tree;
+        $myArray = explode('/', $str);
+        $cnt = count($myArray);
+        return $myArray[$cnt-1];
     }
 
 
@@ -115,6 +113,19 @@ class ProjectController extends Controller
     {
         $path = public_path() . '/directory/images';
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
+    }
+
+    public function deleteDirectory()
+    {
+        $path = public_path('directory/images');
+        return File::deleteDirectory($path);
+    }
+
+    public function renameDirectory()
+    {
+        $oldpath = public_path() . '/directory/images';
+        $newpath = public_path() . '/directory/img';
+        rename($oldpath, $newpath);
     }
 
     public function create()
@@ -132,11 +143,7 @@ class ProjectController extends Controller
     {
         $txtHeadName = $request->txtHeadName;
         $txtPHead = $request->txtPHead;
-        if ($txtPHead == 'directory') {
-            $path = public_path() . '/directory' . '/' . $txtHeadName;
-        }else{
-            $path = public_path() . '/directory' . '/' . $txtPHead . '/' . $txtHeadName;
-        }
+        $path = public_path() . '/' . $txtPHead . '/' . $txtHeadName;
         File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
         return 1;
     }
