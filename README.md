@@ -25,10 +25,8 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 ```
 git clone https://github.com/harunBdtask/l9.git
 cd l9
-```
-#### -rename .env.example to .env
-```
 composer install
+rename .env.example .env
 php artisan key:generate
 php artisan serve
 ```
