@@ -12,6 +12,8 @@
         <link rel="shortcut icon" href="{{asset('assets')}}/dist/img/favicon.png">
         <!--Global Styles(used by all pages)-->
         <link href="{{asset('assets')}}/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://cdn.datatables.net/1.10.21/css/jquery.dataTables.min.css" rel="stylesheet">
+    <link href="https://cdn.datatables.net/1.10.21/css/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link href="{{asset('assets')}}/plugins/metisMenu/metisMenu.css" rel="stylesheet">
         <link href="{{asset('assets')}}/plugins/fontawesome/css/all.min.css" rel="stylesheet">
         <link href="{{asset('assets')}}/plugins/typicons/src/typicons.min.css" rel="stylesheet">
@@ -95,6 +97,11 @@
         <!--Global script(used by all pages)-->
         <script src="{{asset('assets')}}/plugins/jQuery/jquery.min.js"></script>
         <script src="{{asset('assets')}}/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
+        
+<script src="https://cdn.datatables.net/1.10.21/js/jquery.dataTables.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
+<script src="https://cdn.datatables.net/1.10.21/js/dataTables.bootstrap4.min.js"></script>
+
         <script src="{{asset('assets')}}/plugins/metisMenu/metisMenu.min.js"></script>
         <script src="{{asset('assets')}}/plugins/perfect-scrollbar/dist/perfect-scrollbar.min.js"></script>
         <!-- Third Party Scripts(used by this page)-->

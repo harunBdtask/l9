@@ -17,5 +17,6 @@ Route::get('/', [ProjectController::class, 'home'])->name('home');
 Route::get('/create_directory', [ProjectController::class, 'createDirectory'])->name('create_directory');
 Route::get('/show_directories', [ProjectController::class, 'showFiles'])->name('show_directories');
 Route::get('/delete_directories', [ProjectController::class, 'renameDirectory'])->name('delete_directories');
+Route::post('/upload_file', [ProjectController::class, 'uploadFile'])->name('upload_file');
 //ProjectController
 Route::resource('project', ProjectController::class);

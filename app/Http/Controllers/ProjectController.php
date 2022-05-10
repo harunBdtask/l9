@@ -6,6 +6,7 @@ use App\Models\Project;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
 
 class ProjectController extends Controller
 {
@@ -25,14 +26,36 @@ class ProjectController extends Controller
         return view('layouts', $data);
     }
 
-    public function index()
+    public function index(Request $request)
     {
-        //
+        if ($request->ajax()) {
+            // $data = Project::latest()->get();
+            $data = array(
+                '0' => array(
+                    'id' => '1',
+                    'name' => 'A',
+                ), 
+                '1' => array(
+                    'id' => '2',
+                    'name' => 'B',
+                ), 
+            );
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function($row){
+                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    return $actionBtn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
     }
+
 
     public function showFiles()
     {
-        $files = Storage::disk('public-folder')->allFiles('directory');
+        // $files = Storage::disk('public-folder')->allFiles('directory');
+        $files = Storage::disk('public-folder')->files('directory');
         dd($files);
     }
 
@@ -140,6 +163,20 @@ class ProjectController extends Controller
         //
     }
 
+    public function uploadFile(Request $req)
+    {
+        if($req->hasfile('attc')) {
+            foreach($req->file('attc') as $file)
+            {
+                $name = $file->getClientOriginalName();
+                $file->move(public_path().'/directory', $name);  
+                
+            }
+            return 1;
+        }
+    }
+
+    
     /**
      * Store a newly created resource in storage.
      *

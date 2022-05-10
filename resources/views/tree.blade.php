@@ -78,10 +78,86 @@
                     <br>
                 </div>
             </div>
+            <hr>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="card">
+
+                        <div class="card-header py-2">
+
+                            <div class="d-flex justify-content-between align-items-center">
+                                <div>
+                                    <nav aria-label="breadcrumb" class="order-sm-last p-0">
+                                        <ol class="breadcrumb d-inline-flex font-weight-600 fs-17 bg-white mb-0 float-sm-left p-0">
+                                            <li class="breadcrumb-item"><a href="#">File List</a></li>
+                                            <li class="breadcrumb-item active">Table</li>
+                                        </ol>
+                                    </nav>
+                                </div>
+                                <div class="text-right">
+                                    <button type="button" class="btn btn-success btn-sm mr-1 addShowModal"><i class="fas fa-plus mr-1"></i><?php echo get_phrases(['upload', 'file']); ?></button>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="card-body">
+                            <div class="row form-group">
+                                <!-- filter part -->
+                            </div>
+                            <table id="itemsList" class="table display table-bordered table-striped table-hover compact" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th width="5%"><?php echo get_phrases(['sl']); ?></th>
+                                        <th width="10%"><?php echo get_phrases(['name']); ?></th>
+                                        <th width="10%"><?php echo get_phrases(['action']); ?></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
 <!--/.body content-->
+<!-- modal button -->
+<div class="modal fade bd-example-modal-xl" id="items-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel3" aria-hidden="true">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title font-weight-600" id="itemsModalLabel"></h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form enctype="multipart/form-data" action="{{route('upload_file')}}" method="post">
+                @csrf
+                <div class="modal-body">
+                    <div class="input-group hdtuto control-group lst increment">
+                        <div id='attc'>
+                            <div class="input-group" style="margin-top:5px;">
+                                <input type="file" name="attc[]" class="form-control" />
+                                <div class="input-group-prepend">
+                                    <button type="button" class="btn btn-success addRow"><i class="fa fa-plus"></i></button>
+                                    <button type="button" class="btn btn-danger removeRow"><i class="fa fa-minus"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo get_phrases(['close']); ?></button>
+                    <button type="submit" class="btn btn-success modal_action"></button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 @push('scripts')
 <script>
@@ -152,7 +228,6 @@
         //delete
         $('.actionBtn3').click(function(e) {
             e.preventDefault();
-
             swal({
                 title: "Delete?",
                 text: "Please ensure and then confirm!",
@@ -162,21 +237,60 @@
                 cancelButtonText: "No, cancel!",
                 reverseButtons: !0
             }).then(function(e) {
-
                 if (e.value === true) {
                     actionAjax('delete');
                 } else {
                     e.dismiss;
                 }
-
             }, function(dismiss) {
                 return false;
             })
-
         });
 
 
+        $('body').on('click', '.addRow', function() {
+            var html = '<div class="input-group" style="margin-top:5px;">' +
+                '<input type="file" name="attc[]" class="form-control" />' +
+                '<div class="input-group-prepend">' +
+                '<button type="button" class="btn btn-success addRow" ><i class="fa fa-plus"></i></button>' +
+                '<button type="button" class="btn btn-danger removeRow" ><i class="fa fa-minus"></i></button>' +
+                '</div>' +
+                '</div>';
+            $("#attc").append(html);
+        });
 
+        $('body').on('click', '.removeRow', function() {
+            var rowCount = $('#attc >div').length;
+            if (rowCount > 1) {
+                $(this).parent().parent().remove();
+            } else {
+                alert('There only one row, you can not delete !! ');
+            }
+        });
+
+        //add files
+        $('.addShowModal').on('click', function() {
+            $('#itemsModalLabel').text('<?php echo get_phrases(['add', 'bag']); ?>');
+            $('.modal_action').text('<?php echo get_phrases(['add']); ?>');
+            $('#items-modal').modal('show');
+        });
+
+        // table serverside
+        var table = $('#itemsList').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ route('project.index') }}",
+            columns: [
+                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                {data: 'name', name: 'name'},
+                {
+                    data: 'action', 
+                    name: 'action', 
+                    orderable: true, 
+                    searchable: true
+                },
+            ]
+        });
 
     });
 </script>
