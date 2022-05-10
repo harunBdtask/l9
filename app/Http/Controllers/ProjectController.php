@@ -37,6 +37,7 @@ class ProjectController extends Controller
                     'name'  => $this->strSplit($data[$i]),
                     'image' => $data[$i],
                     'download' => $data[$i],
+                    'button' => $data[$i],
                 );
             }
 
@@ -58,7 +59,7 @@ class ProjectController extends Controller
             return Datatables::of($dd)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
-                    $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
+                    $actionBtn = '';
                     return $actionBtn;
                 })
                 ->rawColumns(['action'])
@@ -187,6 +188,10 @@ class ProjectController extends Controller
 
     public function uploadFile(Request $req)
     {
+        // $req->validate([
+        //     'attc' => 'required',
+        //     'attc.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:2048'
+        // ]);
         if ($req->hasfile('attc')) {
             foreach ($req->file('attc') as $file) {
                 $name = $file->getClientOriginalName();
@@ -220,6 +225,13 @@ class ProjectController extends Controller
             $this->deleteDirectory($txtPHead);
             return 3;
         }
+    }
+
+    public function removeFile(Request $request)
+    {
+        $directory = $request->directory;
+        File::delete(public_path($directory));
+        return 1;
     }
 
     /**

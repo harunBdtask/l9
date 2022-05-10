@@ -26,11 +26,11 @@
                 </div>
                 <div class="text-right">
                     <div class="actions">
-                        <a href="#" class="action-item"><i class="ti-reload"></i></a>
+                        <a href="#" class="action-item reload"><i class="ti-reload"></i></a>
                         <div class="dropdown action-item" data-toggle="dropdown">
                             <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item">Refresh</a>
+                                <a href="#" class="dropdown-item reload">Refresh</a>
                                 <a href="#" class="dropdown-item">Manage Widgets</a>
                                 <a href="#" class="dropdown-item">Settings</a>
                             </div>
@@ -112,7 +112,8 @@
                                         <th width="10%"><?php echo get_phrases(['name']); ?></th>
                                         <th width="10%"><?php echo get_phrases(['image', 'preview']); ?></th>
                                         <th width="5%"><?php echo get_phrases(['download']); ?></th>
-                                        <th width="10%"><?php echo get_phrases(['action']); ?></th>
+                                        <th width="5%"><?php echo get_phrases(['action']); ?></th>
+                                        <th width="0%"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -220,6 +221,32 @@
 
         });
 
+        //reload
+        $('.reload').click(function(e) {
+            e.preventDefault();
+            location.reload();
+
+        });
+
+        //delete
+        $('body').on('click', '.delete', function (e) {
+            e.preventDefault();
+            var id = $(this).data('id');
+            $.ajax({
+                url: "{{ route('remove_file') }}",
+                type: "POST",
+                dataType: 'json',
+                data: {
+                    '_token': "{{ csrf_token() }}",
+                    'directory': id,
+                },
+                success: function(data) {
+                    location.reload();
+                }
+            });
+
+        });
+
         //rename
         $('.actionBtn2').click(function(e) {
             e.preventDefault();
@@ -298,6 +325,12 @@
                     data: "download",
                     render: function(data, type, row, meta) {
                         return '<a href="' + data + '" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><i class="fa fa-download"></i> </a>';
+                    }
+                },
+                {
+                    data: "button",
+                    render: function(data, type, row, meta) {
+                        return '<a href="javascript:void(0)" data-id="' + data + '" class="delete btn btn-danger btn-sm">Delete</a>';
                     }
                 },
                 {
