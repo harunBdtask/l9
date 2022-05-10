@@ -29,20 +29,35 @@ class ProjectController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            // $data = Project::latest()->get();
-            $data = array(
-                '0' => array(
-                    'id' => '1',
-                    'name' => 'A',
-                ), 
-                '1' => array(
-                    'id' => '2',
-                    'name' => 'B',
-                ), 
-            );
-            return Datatables::of($data)
+            $data = $this->showDirectoryFiles('directory');
+            $dd = array();
+            for ($i = 0; $i < count($data); $i++) {
+                $dd[$i] = array(
+                    'id'    => $i + 1,
+                    'name'  => $this->strSplit($data[$i]),
+                    'image' => $data[$i],
+                    'download' => $data[$i],
+                );
+            }
+
+            // $dd = Project::latest()->get();
+            // $dd = array(
+            //     '0' => array(
+            //         'id' => '1',
+            //         'name' => 'A',
+            //     ), 
+            //     '1' => array(
+            //         'id' => '2',
+            //         'name' => 'B',
+            //     ), 
+            // );
+            // $dd = array(
+            //     '0' => 'directory/dd.txt', 
+            //     '1' => 'directory/lal.jpg', 
+            // );
+            return Datatables::of($dd)
                 ->addIndexColumn()
-                ->addColumn('action', function($row){
+                ->addColumn('action', function ($row) {
                     $actionBtn = '<a href="javascript:void(0)" class="edit btn btn-success btn-sm">Edit</a> <a href="javascript:void(0)" class="delete btn btn-danger btn-sm">Delete</a>';
                     return $actionBtn;
                 })
@@ -56,7 +71,14 @@ class ProjectController extends Controller
     {
         // $files = Storage::disk('public-folder')->allFiles('directory');
         $files = Storage::disk('public-folder')->files('directory');
-        dd($files);
+        echo '<pre>';
+        print_r($files);
+    }
+
+    public function showDirectoryFiles($directory)
+    {
+        $files = Storage::disk('public-folder')->files($directory);
+        return $files;
     }
 
     public function showDirectories()
@@ -122,14 +144,14 @@ class ProjectController extends Controller
     {
         $myArray = explode('/', $str);
         $cnt = count($myArray);
-        return $myArray[$cnt-1];
+        return $myArray[$cnt - 1];
     }
 
     public function strPop($str)
     {
         $stack = explode('/', $str);
         array_pop($stack);
-        return implode("/",$stack);
+        return implode("/", $stack);
     }
 
 
@@ -165,18 +187,16 @@ class ProjectController extends Controller
 
     public function uploadFile(Request $req)
     {
-        if($req->hasfile('attc')) {
-            foreach($req->file('attc') as $file)
-            {
+        if ($req->hasfile('attc')) {
+            foreach ($req->file('attc') as $file) {
                 $name = $file->getClientOriginalName();
-                $file->move(public_path().'/directory', $name);  
-                
+                $file->move(public_path() . '/directory', $name);
             }
             return 1;
         }
     }
 
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -192,11 +212,11 @@ class ProjectController extends Controller
         if ($action == 'create') {
             File::isDirectory($path) or File::makeDirectory($path, 0777, true, true);
             return 1;
-        }elseif ($action == 'rename') {
+        } elseif ($action == 'rename') {
             $new = $this->strPop($txtPHead) . '/' . $txtHeadName;
             $this->renameDirectory($txtPHead, $new);
             return 2;
-        }elseif ($action == 'delete') {
+        } elseif ($action == 'delete') {
             $this->deleteDirectory($txtPHead);
             return 3;
         }

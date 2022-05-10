@@ -110,6 +110,8 @@
                                     <tr>
                                         <th width="5%"><?php echo get_phrases(['sl']); ?></th>
                                         <th width="10%"><?php echo get_phrases(['name']); ?></th>
+                                        <th width="10%"><?php echo get_phrases(['image', 'preview']); ?></th>
+                                        <th width="5%"><?php echo get_phrases(['download']); ?></th>
                                         <th width="10%"><?php echo get_phrases(['action']); ?></th>
                                     </tr>
                                 </thead>
@@ -280,13 +282,28 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('project.index') }}",
-            columns: [
-                {data: 'DT_RowIndex', name: 'DT_RowIndex'},
-                {data: 'name', name: 'name'},
+            columns: [{
+                    data: 'id'
+                },
                 {
-                    data: 'action', 
-                    name: 'action', 
-                    orderable: true, 
+                    data: 'name'
+                },
+                {
+                    data: "image",
+                    render: function(data, type, row, meta) {
+                        return '<img src="' + data + '" alt="file" class="img-thumbnail" height="70" width="70">';
+                    }
+                },
+                {
+                    data: "download",
+                    render: function(data, type, row, meta) {
+                        return '<a href="' + data + '" target="_blank" rel="noopener noreferrer" class="btn btn-primary"><i class="fa fa-download"></i> </a>';
+                    }
+                },
+                {
+                    data: 'action',
+                    name: 'action',
+                    orderable: true,
                     searchable: true
                 },
             ]
