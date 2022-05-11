@@ -75,6 +75,30 @@ class ProjectController extends Controller
         }
     }
 
+    public function moveDirectory($full_path_source, $dest)
+    {
+        $full_path_dest = public_path() . '/' . $dest . '/' .$this->strSplit($full_path_source);
+        return File::moveDirectory($full_path_source, $full_path_dest, true);
+    }
+
+    public function copyDirectory($full_path_source, $dest)
+    {
+        $full_path_dest = public_path() . '/' . $dest . '/' .$this->strSplit($full_path_source);
+        return File::copyDirectory($full_path_source, $full_path_dest, true);
+    }
+
+    public function moveFile($full_path_source, $dest)
+    {
+        $full_path_dest = public_path() . '/' . $dest . '/' .$this->strSplit($full_path_source);
+        return File::move($full_path_source, $full_path_dest);
+    }
+
+    public function copyFile($full_path_source, $dest)
+    {
+        $full_path_dest = public_path() . '/' . $dest . '/' .$this->strSplit($full_path_source);
+        return File::copy($full_path_source, $full_path_dest);
+    }
+
 
     public function showFiles()
     {
@@ -237,6 +261,7 @@ class ProjectController extends Controller
      */
     public function store(Request $request)
     {
+        $dir = $request->dir;
         $action = $request->action;
         $txtHeadName = $request->txtHeadName;
         $txtPHead = $request->txtPHead;
@@ -251,7 +276,28 @@ class ProjectController extends Controller
         } elseif ($action == 'delete') {
             $this->deleteDirectory($txtPHead);
             return 3;
+        } elseif ($action == 'copy') {
+            $this->copyDirectory($txtPHead, $dir);
+            return 4;
+        } elseif ($action == 'move') {
+            $this->moveDirectory($txtPHead, $dir);
+            return 5;
         }
+    }
+
+    public function fileAction(Request $request)
+    {
+        $directory = $request->directory;
+        $action = $request->action;
+        $destination = $request->destination;
+        if ($action == 'fileCopy') {
+            return $this->copyFile($directory, $destination);
+        } else if ($action == 'fileMove') {
+            return $this->moveFile($directory, $destination);
+        } else if ($action == 'delete') {
+            return File::delete(public_path($directory));
+        }
+        
     }
 
     public function removeFile(Request $request)
