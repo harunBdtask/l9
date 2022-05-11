@@ -1,8 +1,7 @@
 <div class="content-header row align-items-center m-0">
     <nav aria-label="breadcrumb" class="col-sm-4 order-sm-last mb-3 mb-sm-0 p-0 ">
         <ol class="breadcrumb d-inline-flex font-weight-600 fs-13 bg-white mb-0">
-            <li class="breadcrumb-item"><a href="#">Home</a></li>
-            <li class="breadcrumb-item"><a href="#">Forms</a></li>
+            <li class="breadcrumb-item"><a href="#">{{ get_phrases(['dashboard']) }}</a></li>
             <li class="breadcrumb-item active">{{$title}}</li>
         </ol>
     </nav>
@@ -30,9 +29,8 @@
                         <div class="dropdown action-item" data-toggle="dropdown">
                             <a href="#" class="action-item"><i class="ti-more-alt"></i></a>
                             <div class="dropdown-menu">
-                                <a href="#" class="dropdown-item reload">Refresh</a>
-                                <a href="#" class="dropdown-item">Manage Widgets</a>
-                                <a href="#" class="dropdown-item">Settings</a>
+                                <a href="#" class="dropdown-item reload">{{ get_phrases(['refresh']) }}</a>
+                                <a href="#" class="dropdown-item">{{ get_phrases(['manage','widgets']) }}</a>
                             </div>
                         </div>
                     </div>
@@ -55,19 +53,19 @@
                             <table width="100%" border="0" cellspacing="0" cellpadding="5">
 
                                 <tr>
-                                    <td><?php echo get_phrases(['directory', 'name']); ?></td>
+                                    <td>{{ get_phrases(['directory', 'name']) }}</td>
                                     <td><input type="text" name="txtHeadName" id="txtHeadName" class="form-control" /></td>
                                 </tr>
                                 <tr>
-                                    <td><?php echo get_phrases(['parent', 'directory']); ?></td>
+                                    <td>{{ get_phrases(['parent', 'directory']) }}</td>
                                     <td><input type="text" name="txtPHead" id="txtPHead" class="form-control" readonly="readonly" /></td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>
-                                        <button class="btn btn-primary actionBtn">Create</button>
-                                        <button class="btn btn-success actionBtn2">Rename</button>
-                                        <button class="btn btn-danger actionBtn3">Delete</button>
+                                        <button class="btn btn-primary actionBtn">{{ get_phrases(['create']) }}</button>
+                                        <button class="btn btn-success actionBtn2">{{ get_phrases(['rename']) }}</button>
+                                        <button class="btn btn-danger actionBtn3">{{ get_phrases(['delete']) }}</button>
                                     </td>
 
                                 </tr>
@@ -89,13 +87,13 @@
                                 <div>
                                     <nav aria-label="breadcrumb" class="order-sm-last p-0">
                                         <ol class="breadcrumb d-inline-flex font-weight-600 fs-17 bg-white mb-0 float-sm-left p-0">
-                                            <li class="breadcrumb-item"><a href="#">File List</a></li>
-                                            <li class="breadcrumb-item active">Table</li>
+                                            <li class="breadcrumb-item"><a href="#">{{ get_phrases(['file','list']) }}</a></li>
+                                            <li class="breadcrumb-item active">{{ get_phrases(['table']) }}</li>
                                         </ol>
                                     </nav>
                                 </div>
                                 <div class="text-right">
-                                    <button type="button" class="btn btn-success btn-sm mr-1 addShowModal"><i class="fas fa-plus mr-1"></i><?php echo get_phrases(['upload', 'file']); ?></button>
+                                    <button type="button" class="btn btn-success btn-sm mr-1 addShowModal"><i class="fas fa-plus mr-1"></i>{{ get_phrases(['upload', 'file']) }}</button>
                                 </div>
                             </div>
 
@@ -103,16 +101,30 @@
 
                         <div class="card-body">
                             <div class="row form-group">
-                                <!-- filter part -->
+                                @if ($message = Session::get('success'))
+                                <div class="alert alert-success">
+                                    <strong>{{ $message }}</strong>
+                                </div>
+                                @endif
+                                @if (count($errors) > 0)
+                                    <div class="alert alert-danger">
+                                        <ul>
+                                            @foreach ($errors->all() as $error)
+                                            <li>{{ $error }}</li>
+                                            @endforeach
+                                        </ul>
+                                    </div>
+                                @endif
                             </div>
                             <table id="itemsList" class="table display table-bordered table-striped table-hover compact" width="100%">
                                 <thead>
                                     <tr>
-                                        <th width="5%"><?php echo get_phrases(['sl']); ?></th>
-                                        <th width="10%"><?php echo get_phrases(['name']); ?></th>
-                                        <th width="10%"><?php echo get_phrases(['image', 'preview']); ?></th>
-                                        <th width="5%"><?php echo get_phrases(['download']); ?></th>
-                                        <th width="5%"><?php echo get_phrases(['action']); ?></th>
+                                        <th width="5%">{{ get_phrases(['sl']) }}</th>
+                                        <th width="10%">{{ get_phrases(['directory']) }}</th>
+                                        <th width="10%">{{ get_phrases(['file','name']) }}</th>
+                                        <th width="10%">{{ get_phrases(['image', 'preview']) }}</th>
+                                        <th width="5%">{{ get_phrases(['download']) }}</th>
+                                        <th width="5%">{{ get_phrases(['action']) }}</th>
                                         <th width="0%"></th>
                                     </tr>
                                 </thead>
@@ -141,8 +153,18 @@
             <form enctype="multipart/form-data" action="{{route('upload_file')}}" method="post">
                 @csrf
                 <div class="modal-body">
-                    <div class="input-group hdtuto control-group lst increment">
-                        <div id='attc'>
+                    <div class="row form-group">
+                        <label for="directory" class="col-sm-3 col-form-label font-weight-600">{{ get_phrases(['select', 'directory']) }} </label>
+                        <select name="directory" id="directory" class="form-control col-sm-6" >
+                            <option>directory</option>
+                            @foreach ($all_directories as $value)
+                                <option>{{ $value }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="row form-group">
+                        <label for="attc" class="col-sm-3 col-form-label font-weight-600">{{ get_phrases(['file']) }} </label>
+                        <div id='attc' class="col-sm-6">
                             <div class="input-group" style="margin-top:5px;">
                                 <input type="file" name="attc[]" class="form-control" />
                                 <div class="input-group-prepend">
@@ -154,7 +176,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-danger" data-dismiss="modal"><?php echo get_phrases(['close']); ?></button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">{{ get_phrases(['close']) }}</button>
                     <button type="submit" class="btn btn-success modal_action"></button>
                 </div>
             </form>
@@ -218,14 +240,12 @@
                 return;
             }
             actionAjax('create');
-
         });
 
         //reload
         $('.reload').click(function(e) {
             e.preventDefault();
             location.reload();
-
         });
 
         //delete
@@ -241,7 +261,7 @@
                     'directory': id,
                 },
                 success: function(data) {
-                    location.reload();
+                    $('#itemsList').DataTable().ajax.reload(null, false);
                 }
             });
 
@@ -251,7 +271,6 @@
         $('.actionBtn2').click(function(e) {
             e.preventDefault();
             actionAjax('rename');
-
         });
 
         //delete
@@ -299,8 +318,8 @@
 
         //add files
         $('.addShowModal').on('click', function() {
-            $('#itemsModalLabel').text('<?php echo get_phrases(['add', 'bag']); ?>');
-            $('.modal_action').text('<?php echo get_phrases(['add']); ?>');
+            $('#itemsModalLabel').text("{{ get_phrases(['add', 'file']) }}");
+            $('.modal_action').text("{{ get_phrases(['add']) }}");
             $('#items-modal').modal('show');
         });
 
@@ -309,9 +328,9 @@
             processing: true,
             serverSide: true,
             ajax: "{{ route('project.index') }}",
-            columns: [{
-                    data: 'id'
-                },
+            columns: [
+                {data: 'id'},
+                {data: 'directory'},
                 {
                     data: 'name'
                 },

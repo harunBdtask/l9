@@ -18,44 +18,52 @@ class ProjectController extends Controller
     public function home()
     {
         $directories = $this->showDirectories();
+        $all_directories = $this->showAllDirectories();
         $data = array(
-            'title' => 'Tree View',
+            'title' => get_phrases(['tree', 'view']),
             'content'   => 'tree',
+            'all_directories'   => $all_directories,
             'trees' => $this->dfsNew('directory', $directories),
         );
         return view('layouts', $data);
     }
 
+    public function languageSettings()
+    {
+        $path = public_path() . '/assets/language/english.json';
+        $phrases = openJsonFile($path);
+        $data = array(
+            'title' => get_phrases(['language', 'settings']),
+            'content'   => 'language',
+            'phrases'   => $phrases,
+        );
+        return view('layouts', $data);
+    }
+
+    public function updatePhrase(Request $request)
+    {
+        $path = public_path() . '/assets/language/english.json';
+        $key = $request->key;
+        $updatedValue = $request->updatedValue;
+        saveJsonFile($path, $key, $updatedValue);
+        return 1;
+    }
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = $this->showDirectoryFiles('directory');
+            $data = $this->showFiles();
             $dd = array();
             for ($i = 0; $i < count($data); $i++) {
                 $dd[$i] = array(
                     'id'    => $i + 1,
+                    'directory'  => $this->strPop($data[$i]),
                     'name'  => $this->strSplit($data[$i]),
                     'image' => $data[$i],
                     'download' => $data[$i],
                     'button' => $data[$i],
                 );
             }
-
-            // $dd = Project::latest()->get();
-            // $dd = array(
-            //     '0' => array(
-            //         'id' => '1',
-            //         'name' => 'A',
-            //     ), 
-            //     '1' => array(
-            //         'id' => '2',
-            //         'name' => 'B',
-            //     ), 
-            // );
-            // $dd = array(
-            //     '0' => 'directory/dd.txt', 
-            //     '1' => 'directory/lal.jpg', 
-            // );
             return Datatables::of($dd)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {
@@ -70,10 +78,8 @@ class ProjectController extends Controller
 
     public function showFiles()
     {
-        // $files = Storage::disk('public-folder')->allFiles('directory');
-        $files = Storage::disk('public-folder')->files('directory');
-        echo '<pre>';
-        print_r($files);
+        $files = Storage::disk('public-folder')->allFiles('directory');
+        return $files;
     }
 
     public function showDirectoryFiles($directory)
@@ -86,6 +92,26 @@ class ProjectController extends Controller
     {
         $directories = Storage::disk('public-folder')->directories('directory');
         return $directories;
+    }
+    public function showAllDirectories()
+    {
+        $directories = Storage::disk('public-folder')->allDirectories('directory');
+        return $directories;
+    }
+
+    function getTree($path)
+    {
+        $tree = [];
+        $branch = [
+            'label' => basename($path)
+        ];
+        foreach (File::files($path) as $key => $file) {
+            $branch['children'][$key]['file'] = basename($file);
+        }
+        foreach (File::directories($path) as $directory) {
+            $branch['children'][] = $this->getTree($directory);
+        }
+        return array_merge($tree, $branch);
     }
 
     public function checkDirectory($path)
@@ -188,16 +214,17 @@ class ProjectController extends Controller
 
     public function uploadFile(Request $req)
     {
-        // $req->validate([
-        //     'attc' => 'required',
-        //     'attc.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:2048'
-        // ]);
+        $directory = $req->directory;
+        $req->validate([
+            'attc' => 'required',
+            'attc.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:2048'
+        ]);
         if ($req->hasfile('attc')) {
             foreach ($req->file('attc') as $file) {
                 $name = $file->getClientOriginalName();
-                $file->move(public_path() . '/directory', $name);
+                $file->move(public_path() . '/' . $directory, $name);
             }
-            return 1;
+            return back()->with( 'success', get_phrases(['file', 'has', 'been', 'uploaded']) );
         }
     }
 

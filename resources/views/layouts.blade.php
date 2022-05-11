@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="Responsive Bootstrap 4 Admin &amp; Dashboard Template">
     <meta name="author" content="Bhulua">
-    <title>{{$title}} Bhulua - Bootstrap 4 Admin Template Deshboard</title>
+    <title>{{$title}} Bhulua - Bootstrap 4 {{ get_phrases(['admin', 'template', 'dashboard']) }}</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- App favicon -->
     <link rel="shortcut icon" href="{{asset('assets')}}/dist/img/favicon.png">
@@ -54,20 +54,20 @@
             <!--/.sidebar header-->
             <div class="sidebar-body">
                 <nav class="sidebar-nav">
-                    <ul class="metismenu d-none">
+                    <ul class="metismenu">
                         <li class="nav-label">
-                            <span class="nav-label_text">Main Menu</span>
+                            <span class="nav-label_text">{{ get_phrases(['main', 'menu']) }}</span>
                             <small class="ti-more-alt nav-label_ellipsis"></small>
                         </li>
 
-                        <li><a href="#"><i class="typcn typcn-messages"></i> Chat</a></li>
+                        <li class="{{ Request::segment(1)==''?'mm-active':null }}" ><a href="{{ url('/') }}"><i class="typcn typcn-tree"></i> {{ get_phrases(['tree', 'view']) }}</a></li>
                         <li>
                             <a class="has-arrow material-ripple" href="#">
-                                <i class="typcn typcn-mail"></i>
-                                Mailbox
+                                <i class="typcn typcn-cog"></i>
+                                {{ get_phrases(['application', 'settings']) }}
                             </a>
                             <ul class="nav-second-level">
-                                <li><a href="#">Mailbox</a></li>
+                                <li class="{{ Request::segment(1)=='language_settings'?'mm-active':null }}"><a href="{{ url('/language_settings') }}">{{ get_phrases(['language']) }}</a></li>
                             </ul>
                         </li>
                     </ul>
@@ -91,8 +91,8 @@
             <!--/.main content-->
             <footer class="footer-content">
                 <div class="footer-text d-flex align-items-center justify-content-between">
-                    <div class="copy">© 2018 Responsive Bootstrap 4 Dashboard Template</div>
-                    <div class="credit">Designed by: <a href="#">Bhulua</a></div>
+                    <div class="copy">© 2018 {{ get_phrases(['admin', 'template', 'dashboard']) }}</div>
+                    <div class="credit">{{ get_phrases(['designed', 'by']) }} : <a href="#">Bhulua</a></div>
                 </div>
             </footer>
             <!--/.footer content-->
