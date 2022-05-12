@@ -241,7 +241,7 @@ class ProjectController extends Controller
         $directory = $req->directory;
         $req->validate([
             'attc' => 'required',
-            'attc.*' => 'mimes:jpeg,jpg,png,gif,csv,txt,pdf|max:2048'
+            'attc.*' => 'mimes:'.get_phrases(['filetype']).'|max:'.get_phrases(['filesize'])
         ]);
         if ($req->hasfile('attc')) {
             foreach ($req->file('attc') as $file) {

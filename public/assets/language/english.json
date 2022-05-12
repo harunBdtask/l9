@@ -47,5 +47,7 @@
     "movess": "Movess",
     "copy_file": "Copy file",
     "copy_to_file": "Copy to file",
-    "move_file": "Move file"
+    "move_file": "Move file",
+    "filesize": "50",
+    "filetype": "jpeg,jpg,png,gif,csv,txt,pdf,docx"
 }

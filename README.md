@@ -39,4 +39,7 @@ php artisan serve
 #### Copy & Move operation with file & directory with recursively
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc5.png"><br>
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc6.png"><br>
+#### Label text and File (extension & size) should be configurable from configuration
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc7.png"><br>
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc8.png"><br>
 
