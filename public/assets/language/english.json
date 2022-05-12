@@ -32,5 +32,10 @@
     "dashboard": "Dashboard",
     "label": "Label",
     "refresh": "Refresh",
-    "manage_widgets": "Manage widgets"
+    "manage_widgets": "Manage widgets",
+    "create": "Create",
+    "rename": "Rename",
+    "delete": "Delete",
+    "file_list": "File list",
+    "table": "Table"
 }
