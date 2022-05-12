@@ -37,5 +37,15 @@
     "rename": "Rename",
     "delete": "Delete",
     "file_list": "File list",
-    "table": "Table"
+    "table": "Table",
+    "copy": "Copy",
+    "move": "Move",
+    "copy_directory": "Copy directory",
+    "move_directory": "Move directory",
+    "copy_to_directory": "Copy to directory",
+    "move_to_directory": "Move to directory",
+    "movess": "Movess",
+    "copy_file": "Copy file",
+    "copy_to_file": "Copy to file",
+    "move_file": "Move file"
 }
