@@ -32,6 +32,8 @@ php artisan serve
 ### Documentation
 <img src="https://prnt.sc/mT-7VO7MF02w"><br>
 <img src="https://github.com/harunBdtask/l9/public/assets/screenshots/1.png"><br>
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/1.png"><br>
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc1.png"><br>
 <img src="https://github.com/oryfikry/laravel-8-boilerplate/blob/beta-release/sc/sc1.png"><br>
 #### Create, rename & delete the directory
 
