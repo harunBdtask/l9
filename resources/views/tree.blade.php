@@ -159,6 +159,7 @@
                     <div class="row form-group">
                         <label for="attc" class="col-sm-3 col-form-label font-weight-600">{{ get_phrases(['file']) }} </label>
                         <div id='attc' class="col-sm-6">
+                            <small id="attachmentHelp" class="form-text text-muted">Max file size 2MB, Allow file types: jpg, jpeg, png, gif, pdf</small>
                             <div class="input-group" style="margin-top:5px;">
                                 <input type="file" name="attc[]" class="form-control" />
                                 <div class="input-group-prepend">

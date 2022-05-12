@@ -33,4 +33,10 @@ php artisan serve
 #### Tree View
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc1.png"><br>
 #### Create, rename & delete the directory
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc3.png"><br>
+#### Uploading allowed file extension (Multi Uploading)
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc4.png"><br>
+#### Copy & Move operation with file & directory with recursively
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc5.png"><br>
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc6.png"><br>
 
