@@ -114,11 +114,11 @@
                                 <thead>
                                     <tr>
                                         <th width="5%">{{ get_phrases(['sl']) }}</th>
-                                        <th width="10%">{{ get_phrases(['directory']) }}</th>
+                                        <th width="15%">{{ get_phrases(['directory']) }}</th>
                                         <th width="10%">{{ get_phrases(['file','name']) }}</th>
                                         <th width="10%">{{ get_phrases(['image', 'preview']) }}</th>
                                         <th width="5%">{{ get_phrases(['download']) }}</th>
-                                        <th width="10%">{{ get_phrases(['action']) }}</th>
+                                        <th width="15%">{{ get_phrases(['action']) }}</th>
                                         <th width="0%"></th>
                                     </tr>
                                 </thead>
@@ -345,7 +345,24 @@
         $('body').on('click', '.delete', function (e) {
             e.preventDefault();
             var id = $(this).data('id');
-            fileAction(id, 'delete', null)
+            
+            swal({
+                title: "Delete?",
+                text: "Please ensure and then confirm!",
+                type: "warning",
+                showCancelButton: !0,
+                confirmButtonText: "Yes, delete it!",
+                cancelButtonText: "No, cancel!",
+                reverseButtons: !0
+            }).then(function(e) {
+                if (e.value === true) {
+                    fileAction(id, 'delete', null);
+                } else {
+                    e.dismiss;
+                }
+            }, function(dismiss) {
+                return false;
+            })
         });
         
         //file copy action

@@ -29,6 +29,7 @@ composer install
 php artisan key:generate
 php artisan serve
 ```
+#### Once you have started the Artisan development server, you may access your application at http://localhost:8000
 ### Documentation
 #### Tree View
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc1.png"><br>
@@ -42,4 +43,5 @@ php artisan serve
 #### Label text and File (extension & size) should be configurable from configuration
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc7.png"><br>
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc8.png"><br>
-
+#### Refreshing, Searching, Sorting Ascending Descending order, Pagination
+<img src="https://github.com/harunBdtask/l9/blob/master/sc/sc9.png"><br>
