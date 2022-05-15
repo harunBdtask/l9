@@ -23,6 +23,7 @@ class ProjectController extends Controller
             'title' => get_phrases(['tree', 'view']),
             'content'   => 'tree',
             'all_directories'   => $all_directories,
+            // 'trees' => $this->getDirTree('directory'),
             'trees' => $this->dfsNew('directory', $directories),
         );
         return view('layouts', $data);
@@ -117,26 +118,50 @@ class ProjectController extends Controller
         $directories = Storage::disk('public-folder')->directories('directory');
         return $directories;
     }
+    
     public function showAllDirectories()
     {
         $directories = Storage::disk('public-folder')->allDirectories('directory');
         return $directories;
     }
 
+    public function showDirList()
+    {
+        // $directories = Storage::disk('public-folder')->allDirectories('directory');
+        // $directories = $this->dfsNew('directory', $this->showDirectories());
+        $directories = $this->getDirTree('directory');
+        return $directories;
+    }
+
     function getTree($path)
     {
-        $tree = [];
         $branch = [
-            'label' => basename($path)
+            'label' => $path
         ];
-        foreach (File::files($path) as $key => $file) {
-            $branch['children'][$key]['file'] = basename($file);
+        $childrens = File::directories($path);
+        if (count($childrens) > 0) {
+            foreach ($childrens as $directory) {
+                $branch['children'][] = $this->getTree($directory);
+            }
         }
-        foreach (File::directories($path) as $directory) {
-            $branch['children'][] = $this->getTree($directory);
-        }
-        return array_merge($tree, $branch);
+        return $branch;
     }
+
+    function getDirTree($path)
+    {
+        $name = basename($path);
+        $tree = '<ul>';
+        $tree .= "<li class=\"jstree-open\"><span onclick=\"loadData('" . $path . "')\">$name</span>";
+        $childrens = File::directories($path);
+        if (count($childrens) > 0) {
+            foreach ($childrens as $directory) {
+                $tree .= $this->getDirTree($directory);
+            }
+        }
+        $tree .= "</li></ul>";
+        return $tree;
+    }
+
 
     public function checkDirectory($path)
     {
