@@ -23,8 +23,7 @@ class ProjectController extends Controller
             'title' => get_phrases(['tree', 'view']),
             'content'   => 'tree',
             'all_directories'   => $all_directories,
-            // 'trees' => $this->getDirTree('directory'),
-            'trees' => $this->dfsNew('directory', $directories),
+            'trees' => $this->getDirTree('directory'),
         );
         return view('layouts', $data);
     }
@@ -127,7 +126,6 @@ class ProjectController extends Controller
 
     public function showDirList()
     {
-        // $directories = Storage::disk('public-folder')->allDirectories('directory');
         // $directories = $this->dfsNew('directory', $this->showDirectories());
         $directories = $this->getDirTree('directory');
         return $directories;
@@ -152,7 +150,7 @@ class ProjectController extends Controller
         $name = basename($path);
         $tree = '<ul>';
         $tree .= "<li class=\"jstree-open\"><span onclick=\"loadData('" . $path . "')\">$name</span>";
-        $childrens = File::directories($path);
+        $childrens = Storage::disk('public-folder')->directories($path);
         if (count($childrens) > 0) {
             foreach ($childrens as $directory) {
                 $tree .= $this->getDirTree($directory);

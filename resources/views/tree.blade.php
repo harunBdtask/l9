@@ -297,11 +297,6 @@
         $('.actionBtn').click(function(e) {
             e.preventDefault();
             var txtPHead = $('#txtPHead').val();
-            var nameArr = txtPHead.split('/');
-            if (nameArr.length > 4) {
-                alert('Max level directory exceeded !!');
-                return;
-            }
             actionAjax('create');
         });
 
