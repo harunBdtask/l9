@@ -21,3 +21,6 @@ Route::post('/file_action', [ProjectController::class, 'fileAction'])->name('fil
 Route::post('/update_phrase', [ProjectController::class, 'updatePhrase'])->name('update_phrase');
 //ProjectController
 Route::resource('project', ProjectController::class);
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
