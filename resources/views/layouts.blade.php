@@ -21,7 +21,6 @@
     <link href="{{asset('assets')}}/plugins/vakata-jstree/dist/themes/default/style.min.css" rel="stylesheet">
     <!--Start Your Custom Style Now-->
     <link href="{{asset('assets')}}/dist/css/style.css" rel="stylesheet">
-    <!--<link href="{{asset('assets')}}/dist/css/style.rtl.css" rel="stylesheet">-->
 </head>
 
 <body class="fixed">
@@ -83,6 +82,35 @@
                         sidebar toggle<span></span>
                     </div>
                     <!--/.sidebar toggle icon-->
+                    <div class="navbar-icon d-flex">
+                        <ul class="navbar-nav flex-row align-items-center">
+                            <li class="nav-item dropdown user-menu">
+                                <a class="nav-link dropdown-toggle material-ripple" href="#" data-toggle="dropdown">
+                                    <i class="typcn typcn-user-add-outline"></i>
+                                </a>
+                                <div class="dropdown-menu" >
+                                    <div class="dropdown-header d-sm-none">
+                                        <a href="" class="header-arrow"><i class="icon ion-md-arrow-back"></i></a>
+                                    </div>
+                                    <div class="user-header">
+                                        <div class="img-user">
+                                            <img src="assets/dist/img/avatar-1.jpg" alt="">
+                                        </div><!-- img-user -->
+                                        <h6>{{ Auth::user()->name }}</h6>
+                                        <span>{{ Auth::user()->email }}</span>
+                                    </div><!-- user-header -->
+                                    <a href="" class="dropdown-item"><i class="typcn typcn-user-outline"></i> My Profile</a>
+                                    <a href="{{ route('logout') }}" 
+                                        onclick="event.preventDefault();
+                                        document.getElementById('logout-form').submit();" 
+                                        class="dropdown-item"><i class="typcn typcn-key-outline"></i> Sign Out</a>
+                                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                            {{ csrf_field() }}
+                                        </form>
+                                </div><!--/.dropdown-menu -->
+                            </li>
+                        </ul>
+                    </div>
                 </nav>
                 <!--/.navbar-->
                 <!--Content Header (Page header)-->

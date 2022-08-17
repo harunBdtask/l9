@@ -12,6 +12,7 @@ use App\Http\Controllers\ProjectController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', [ProjectController::class, 'home'])->name('home');
 Route::get('/language_settings', [ProjectController::class, 'languageSettings'])->name('language_settings');
@@ -21,6 +22,7 @@ Route::post('/file_action', [ProjectController::class, 'fileAction'])->name('fil
 Route::post('/update_phrase', [ProjectController::class, 'updatePhrase'])->name('update_phrase');
 //ProjectController
 Route::resource('project', ProjectController::class);
-Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
