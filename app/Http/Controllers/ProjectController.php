@@ -126,7 +126,6 @@ class ProjectController extends Controller
 
     public function showDirList()
     {
-        // $directories = $this->dfsNew('directory', $this->showDirectories());
         $directories = $this->getDirTree('directory');
         return $directories;
     }
