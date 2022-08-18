@@ -3,6 +3,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Validator;
 class PostController extends Controller
 {
@@ -26,11 +27,14 @@ class PostController extends Controller
     // add post
     public function add(Request $request)
     {
-        dd($request->all());
-        $post = new Post([
-            'title' => $request->input('title'),
-            'description' => $request->input('description')
-        ]);
+        
+        if ($request->hasFile('document')) {
+            $file = $request->file('document');
+            $fileName = time().'.'.$file->getClientOriginalExtension();
+            $path = $file->move('post-documents/', $fileName);
+            $request->merge(['document_path' => $path]);
+        }
+        $post = new Post($request->all());
         $post->save();
         return response()->json('The post successfully added');
     }

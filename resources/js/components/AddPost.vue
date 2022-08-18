@@ -3,19 +3,18 @@
         <h3 class="text-center">Add Post</h3>
         <div class="row">
             <div class="col-md-6">
-                <form @submit.prevent="addPost" enctype="multipart/form-data">
+                <form @submit="addPost" enctype="multipart/form-data">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" v-model="post.title">
+                        <input type="text" class="form-control" v-model="form.title">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <input type="text" class="form-control" v-model="post.description">
+                        <input type="text" class="form-control" v-model="form.description">
                     </div>
                     <div class="form-group">
                         <label>Document</label>
-                         <input type="file" name="document" class="form-control" id="inputFileUpload"
-                                v-on:change="onFileChange">
+                        <input type="file" class="form-control" v-on:change="onFileChange" name="document">
                     </div>
                     <br/>
                     <button type="submit" class="btn btn-primary">Add Post</button>
@@ -28,32 +27,39 @@
     export default {
         data() {
             return {
-                post: {}
+                form: {
+                    title: '',
+                    description: '',
+                    document: null,
+                },
             }
         },
         methods: {
-            onFileChange(e) {
-                this.post.file = e.target.files[0];
+             onFileChange(e){
+                this.form.document = e.target.files[0];
             },
-            addPost() {
+            addPost(e) {
+                e.preventDefault();
                 let currentObj = this;
                 const config = {
-                    headers: {
-                        'content-type': 'multipart/form-data',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+    
+                let formData = new FormData();
+                for (const [key, value] of Object.entries(this.form)) {
+                    if ((this.form[key]) !== null || '') {
+                        formData.append(key, this.form[key]);
                     }
                 }
 
-                let formData = new FormData();
-                formData.append('file', this.post.file);
+                axios.post('/api/post/add', formData, config)
+                .then(function (response) {
+                    currentObj.$router.push({name: 'home'})
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
 
-                this.axios
-                    .post('http://localhost:8000/api/post/add', formData, config)
-                    .then(response => (
-                        this.$router.push({name: 'home'})
-                    ))
-                    .catch(error => console.log(error))
-                    .finally(() => this.loading = false)
             }
         }
     }

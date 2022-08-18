@@ -14,7 +14,7 @@ class AddDocumentToPostsTable extends Migration
     public function up()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->string('document')->nullable()->after('description');
+            $table->string('document_path')->nullable()->after('description');
         });
     }
 
@@ -26,7 +26,7 @@ class AddDocumentToPostsTable extends Migration
     public function down()
     {
         Schema::table('posts', function (Blueprint $table) {
-            $table->dropColumn('document');
+            $table->dropColumn('document_path');
         });
     }
 }

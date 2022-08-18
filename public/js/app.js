@@ -5313,7 +5313,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (__WEBPACK_DEFAULT_EXPORT__)
 /* harmony export */ });
-//
+function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
+
+function _nonIterableRest() { throw new TypeError("Invalid attempt to destructure non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method."); }
+
+function _unsupportedIterableToArray(o, minLen) { if (!o) return; if (typeof o === "string") return _arrayLikeToArray(o, minLen); var n = Object.prototype.toString.call(o).slice(8, -1); if (n === "Object" && o.constructor) n = o.constructor.name; if (n === "Map" || n === "Set") return Array.from(o); if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen); }
+
+function _arrayLikeToArray(arr, len) { if (len == null || len > arr.length) len = arr.length; for (var i = 0, arr2 = new Array(len); i < len; i++) { arr2[i] = arr[i]; } return arr2; }
+
+function _iterableToArrayLimit(arr, i) { var _i = arr == null ? null : typeof Symbol !== "undefined" && arr[Symbol.iterator] || arr["@@iterator"]; if (_i == null) return; var _arr = []; var _n = true; var _d = false; var _s, _e; try { for (_i = _i.call(arr); !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"] != null) _i["return"](); } finally { if (_d) throw _e; } } return _arr; }
+
+function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
+
 //
 //
 //
@@ -5342,33 +5353,43 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
-      post: {}
+      form: {
+        title: '',
+        description: '',
+        document: null
+      }
     };
   },
   methods: {
     onFileChange: function onFileChange(e) {
-      this.post.file = e.target.files[0];
+      this.form.document = e.target.files[0];
     },
-    addPost: function addPost() {
-      var _this = this;
-
+    addPost: function addPost(e) {
+      e.preventDefault();
       var currentObj = this;
       var config = {
         headers: {
-          'content-type': 'multipart/form-data',
-          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+          'content-type': 'multipart/form-data'
         }
       };
       var formData = new FormData();
-      formData.append('file', this.post.file);
-      this.axios.post('http://localhost:8000/api/post/add', formData, config).then(function (response) {
-        return _this.$router.push({
+
+      for (var _i = 0, _Object$entries = Object.entries(this.form); _i < _Object$entries.length; _i++) {
+        var _Object$entries$_i = _slicedToArray(_Object$entries[_i], 2),
+            key = _Object$entries$_i[0],
+            value = _Object$entries$_i[1];
+
+        if (this.form[key] !== null || '') {
+          formData.append(key, this.form[key]);
+        }
+      }
+
+      axios.post('/api/post/add', formData, config).then(function (response) {
+        currentObj.$router.push({
           name: 'home'
         });
       })["catch"](function (error) {
-        return console.log(error);
-      })["finally"](function () {
-        return _this.loading = false;
+        console.log(error);
       });
     }
   }
@@ -28633,12 +28654,7 @@ var render = function () {
           "form",
           {
             attrs: { enctype: "multipart/form-data" },
-            on: {
-              submit: function ($event) {
-                $event.preventDefault()
-                return _vm.addPost.apply(null, arguments)
-              },
-            },
+            on: { submit: _vm.addPost },
           },
           [
             _c("div", { staticClass: "form-group" }, [
@@ -28649,19 +28665,19 @@ var render = function () {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.title,
-                    expression: "post.title",
+                    value: _vm.form.title,
+                    expression: "form.title",
                   },
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.post.title },
+                domProps: { value: _vm.form.title },
                 on: {
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "title", $event.target.value)
+                    _vm.$set(_vm.form, "title", $event.target.value)
                   },
                 },
               }),
@@ -28675,19 +28691,19 @@ var render = function () {
                   {
                     name: "model",
                     rawName: "v-model",
-                    value: _vm.post.description,
-                    expression: "post.description",
+                    value: _vm.form.description,
+                    expression: "form.description",
                   },
                 ],
                 staticClass: "form-control",
                 attrs: { type: "text" },
-                domProps: { value: _vm.post.description },
+                domProps: { value: _vm.form.description },
                 on: {
                   input: function ($event) {
                     if ($event.target.composing) {
                       return
                     }
-                    _vm.$set(_vm.post, "description", $event.target.value)
+                    _vm.$set(_vm.form, "description", $event.target.value)
                   },
                 },
               }),
@@ -28698,11 +28714,7 @@ var render = function () {
               _vm._v(" "),
               _c("input", {
                 staticClass: "form-control",
-                attrs: {
-                  type: "file",
-                  name: "document",
-                  id: "inputFileUpload",
-                },
+                attrs: { type: "file", name: "document" },
                 on: { change: _vm.onFileChange },
               }),
             ]),
