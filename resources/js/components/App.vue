@@ -10,6 +10,7 @@
                     <router-link to="/add" class="nav-item nav-link">Add Post</router-link>
                 </div>
             </div>
+            <a href="/" class="btn btn-warning">Back</a>
         </nav>
         <br/>
         <router-view></router-view>

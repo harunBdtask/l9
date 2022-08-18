@@ -60,6 +60,7 @@
                         </li>
 
                         <li class="{{ Request::segment(1)==''?'mm-active':null }}" ><a href="{{ url('/') }}"><i class="typcn typcn-tree"></i> {{ get_phrases(['tree', 'view']) }}</a></li>
+                        <li><a href="{{ url('/post') }}"><i class="typcn typcn-ticket"></i> {{ get_phrases(['post', 'vue']) }}</a></li>
                         <li>
                             <a class="has-arrow material-ripple" href="#">
                                 <i class="typcn typcn-cog"></i>
