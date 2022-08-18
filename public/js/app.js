@@ -5462,6 +5462,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({});
 
 /***/ }),
@@ -28839,6 +28840,10 @@ var render = function () {
               ],
               1
             ),
+          ]),
+          _vm._v(" "),
+          _c("a", { staticClass: "btn btn-warning", attrs: { href: "/" } }, [
+            _vm._v("Back"),
           ]),
         ]
       ),
