@@ -5333,6 +5333,12 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   data: function data() {
     return {
@@ -5340,14 +5346,25 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
+    onFileChange: function onFileChange(e) {
+      this.post.file = e.target.files[0];
+    },
     addPost: function addPost() {
       var _this = this;
 
-      this.axios.post('http://localhost:8000/api/post/add', this.post).then(function (response) {
+      var currentObj = this;
+      var config = {
+        headers: {
+          'content-type': 'multipart/form-data',
+          'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+        }
+      };
+      var formData = new FormData();
+      formData.append('file', this.post.file);
+      this.axios.post('http://localhost:8000/api/post/add', formData, config).then(function (response) {
         return _this.$router.push({
           name: 'home'
-        }) // console.log(response.data)
-        ;
+        });
       })["catch"](function (error) {
         return console.log(error);
       })["finally"](function () {
@@ -28615,6 +28632,7 @@ var render = function () {
         _c(
           "form",
           {
+            attrs: { enctype: "multipart/form-data" },
             on: {
               submit: function ($event) {
                 $event.preventDefault()
@@ -28674,6 +28692,22 @@ var render = function () {
                 },
               }),
             ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-group" }, [
+              _c("label", [_vm._v("Document")]),
+              _vm._v(" "),
+              _c("input", {
+                staticClass: "form-control",
+                attrs: {
+                  type: "file",
+                  name: "document",
+                  id: "inputFileUpload",
+                },
+                on: { change: _vm.onFileChange },
+              }),
+            ]),
+            _vm._v(" "),
+            _c("br"),
             _vm._v(" "),
             _c(
               "button",

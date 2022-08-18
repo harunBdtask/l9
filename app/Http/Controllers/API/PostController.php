@@ -12,9 +12,21 @@ class PostController extends Controller
         $posts = Post::all()->toArray();
         return array_reverse($posts);
     }
+    
+    public function store(Request $request)
+    {
+        dd($request->all());
+        $post = Post::updateOrCreate([
+            'title' => $request->input('title'),
+            'description' => $request->input('description')
+        ]);
+        $post->save();
+        return response()->json('The post successfully added');
+    }
     // add post
     public function add(Request $request)
     {
+        dd($request->all());
         $post = new Post([
             'title' => $request->input('title'),
             'description' => $request->input('description')
