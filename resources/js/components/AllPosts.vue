@@ -7,6 +7,7 @@
                 <th>ID</th>
                 <th>Title</th>
                 <th>Description</th>
+                <th>Document</th>
                 <th>Created At</th>
                 <th>Updated At</th>
                 <th>Actions</th>
@@ -17,6 +18,15 @@
                 <td>{{ post.id }}</td>
                 <td>{{ post.title }}</td>
                 <td>{{ post.description }}</td>
+                <td style="max-width: 100px;">
+                    <img 
+                        v-if="post.document_path"
+                        width="80px"
+                        alt="Image"
+                        style="border-radius: 5%"
+                        :src="post.document_path"
+                    />
+                </td>
                 <td>{{ post.created_at }}</td>
                 <td>{{ post.updated_at }}</td>
                 <td>
