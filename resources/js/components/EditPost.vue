@@ -3,15 +3,27 @@
         <h3 class="text-center">Edit Post</h3>
         <div class="row">
             <div class="col-md-6">
-                <form @submit.prevent="updatePost">
+                <form @submit="updatePost">
                     <div class="form-group">
                         <label>Title</label>
-                        <input type="text" class="form-control" v-model="post.title">
+                        <input type="text" class="form-control" v-model="form.title">
                     </div>
                     <div class="form-group">
                         <label>Description</label>
-                        <input type="text" class="form-control" v-model="post.description">
+                        <input type="text" class="form-control" v-model="form.description">
                     </div>
+                    <div class="form-group">
+                        <label>Document</label>
+                        <input type="file" class="form-control" v-on:change="onFileChange" name="document">
+                        <img
+                            v-if="this.form.document_path"
+                            width="30%"
+                            alt="Image"
+                            style="border-radius: 5%"
+                            :src="imagePreview"
+                        />
+                    </div>
+                    <br/>
                     <button type="submit" class="btn btn-primary">Update Post</button>
                 </form>
             </div>
@@ -22,25 +34,53 @@
     export default {
         data() {
             return {
-                post: {}
+                form: {
+                    title: '',
+                    description: '',
+                    document_path: '',
+                    document: null,
+                },
             }
         },
         created() {
             this.axios
                 .get(`http://localhost:8000/api/post/edit/${this.$route.params.id}`)
                 .then((response) => {
-                    this.post = response.data;
-                    // console.log(response.data);
+                    this.form = response.data;
                 });
         },
+        computed: {
+            imagePreview(){
+                return '/' + this.form.document_path;
+            },
+        },
         methods: {
-            updatePost() {
-                this.axios
-                    .post(`http://localhost:8000/api/post/update/${this.$route.params.id}`, this.post)
-                    .then((response) => {
-                        this.$router.push({name: 'home'});
-                    });
-            }
+            onFileChange(e){
+                this.form.document = e.target.files[0];
+            },
+            updatePost(e) {
+                e.preventDefault();
+                let currentObj = this;
+                const config = {
+                    headers: { 'content-type': 'multipart/form-data' }
+                }
+    
+                let formData = new FormData();
+                for (const [key, value] of Object.entries(this.form)) {
+                    if ((this.form[key]) !== null || '') {
+                        formData.append(key, this.form[key]);
+                    }
+                }
+
+                axios.post(`/api/post/update/${this.$route.params.id}`, formData, config)
+                .then(function (response) {
+                    currentObj.$router.push({name: 'home'})
+                })
+                .catch(function (error) {
+                    console.log(error);
+                });
+
+            },
         }
     }
 </script>

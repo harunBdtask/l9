@@ -35,7 +35,7 @@
             }
         },
         methods: {
-             onFileChange(e){
+            onFileChange(e){
                 this.form.document = e.target.files[0];
             },
             addPost(e) {
