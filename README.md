@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-# l9
-l9
-=======
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400"></a></p>
 
 <p align="center">
@@ -49,9 +45,6 @@ php artisan serve
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc8.png"><br>
 #### Refreshing, Searching, Sorting Ascending Descending order, Pagination
 <img src="https://github.com/harunBdtask/l9/blob/master/sc/sc9.png"><br>
-<<<<<<< HEAD
->>>>>>> master
-=======
 
 
 ## checkout the right branch
@@ -124,4 +117,3 @@ php ./vendor/bin/grumphp git:deinit
 ```shell
 php ./vendor/bin/grumphp git:init
 ```
->>>>>>> feature-master
