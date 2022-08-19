@@ -1,9 +1,9 @@
 <template>
     <div>
-        <h3 class="text-center">Edit Post</h3>
+        <h3 class="text-center">Post Form</h3>
         <div class="row">
             <div class="col-md-6">
-                <form @submit="updatePost">
+                <form @submit="storeData">
                     <div class="form-group">
                         <label>Title</label>
                         <input type="text" class="form-control" v-model="form.title">
@@ -24,7 +24,7 @@
                         />
                     </div>
                     <br/>
-                    <button type="submit" class="btn btn-primary">Update Post</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
                 </form>
             </div>
         </div>
@@ -39,15 +39,21 @@
                     description: '',
                     document_path: '',
                     document: null,
+                    actionId: null,
                 },
             }
         },
         created() {
-            this.axios
-                .get(`http://localhost:8000/api/post/edit/${this.$route.params.id}`)
-                .then((response) => {
-                    this.form = response.data;
-                });
+            this.form.actionId = this.$route.params.id;
+            if (this.form.actionId) {
+                axios.get(`/api/post/edit/${this.form.actionId}`)
+                    .then((response) => {
+                        this.form = response.data;
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
+            }
         },
         computed: {
             imagePreview(){
@@ -58,7 +64,7 @@
             onFileChange(e){
                 this.form.document = e.target.files[0];
             },
-            updatePost(e) {
+            storeData(e) {
                 e.preventDefault();
                 let currentObj = this;
                 const config = {
@@ -72,7 +78,7 @@
                     }
                 }
 
-                axios.post(`/api/post/update/${this.$route.params.id}`, formData, config)
+                axios.post('/api/post/save', formData, config)
                 .then(function (response) {
                     currentObj.$router.push({name: 'home'})
                 })
@@ -81,6 +87,6 @@
                 });
 
             },
-        }
+        },
     }
 </script>

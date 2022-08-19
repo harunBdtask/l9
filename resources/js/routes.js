@@ -1,20 +1,14 @@
 import AllPosts from './components/AllPosts.vue';
-import AddPost from './components/AddPost.vue';
-import EditPost from './components/EditPost.vue';
+import CreateOrUpdatePost from './components/CreateOrUpdatePost.vue';
 export const routes = [
     {
         name: 'home',
-        path: '/post',
+        path: '/posts',
         component: AllPosts
     },
     {
-        name: 'add',
-        path: '/add',
-        component: AddPost
+        name: 'store',
+        path: '/store',
+        component: CreateOrUpdatePost
     },
-    {
-        name: 'edit',
-        path: '/edit/:id',
-        component: EditPost
-    }
 ];

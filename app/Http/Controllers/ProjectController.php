@@ -29,7 +29,7 @@ class ProjectController extends Controller
             'all_directories'   => $all_directories,
             'trees' => $this->getDirTree('directory'),
         );
-        return view('layouts', $data);
+        return view('layouts.layouts', $data);
     }
 
     public function languageSettings()
@@ -41,7 +41,7 @@ class ProjectController extends Controller
             'content'   => 'language',
             'phrases'   => $phrases,
         );
-        return view('layouts', $data);
+        return view('layouts.layouts', $data);
     }
 
     public function updatePhrase(Request $request)

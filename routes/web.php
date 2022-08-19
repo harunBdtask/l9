@@ -20,12 +20,8 @@ Route::get('/show_directories', [ProjectController::class, 'showDirList'])->name
 Route::post('/upload_file', [ProjectController::class, 'uploadFile'])->name('upload_file');
 Route::post('/file_action', [ProjectController::class, 'fileAction'])->name('file_action');
 Route::post('/update_phrase', [ProjectController::class, 'updatePhrase'])->name('update_phrase');
-//ProjectController
 Route::resource('project', ProjectController::class);
 
-
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index']);
-Route::get('/post', function () {
-    return view('layouts.post');
-});
+Route::get('/posts', [App\Http\Controllers\API\PostController::class, 'index']);
 

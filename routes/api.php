@@ -19,10 +19,9 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('posts', [PostController::class, 'index']);
+Route::get('posts', [PostController::class, 'getPosts']);
 Route::group(['prefix' => 'post'], function () {
-    Route::post('add', [PostController::class, 'add']);
+    Route::post('save', [PostController::class, 'save']);
     Route::get('edit/{id}', [PostController::class, 'edit']);
-    Route::post('update/{id}', [PostController::class, 'update']);
     Route::delete('delete/{id}', [PostController::class, 'delete']);
 });

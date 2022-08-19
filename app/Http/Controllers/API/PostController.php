@@ -9,59 +9,46 @@ class PostController extends Controller
     
     public function index()
     {
+        return view('post');
+    }
+    
+    public function getPosts()
+    {
         $posts = Post::all()->toArray();
         return array_reverse($posts);
     }
     
-    public function store(Request $request)
-    {
-        dd($request->all());
-        $post = Post::updateOrCreate([
-            'title' => $request->input('title'),
-            'description' => $request->input('description')
-        ]);
-        $post->save();
-        return response()->json('The post successfully added');
-    }
-    
-    public function add(Request $request)
-    {
-        if ($request->hasFile('document')) {
-            $file = $request->file('document');
-            $fileName = time().'.'.$file->getClientOriginalExtension();
-            $path = $file->move('post-documents/', $fileName);
-            $request->merge(['document_path' => $path]);
-        }
-        $post = new Post($request->all());
-        $post->save();
-        return response()->json('The post successfully added');
-    }
-    
     public function edit($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         return response()->json($post);
     }
     
-    public function update($id, Request $request)
+    public function save(Request $request)
     {
-        $post = Post::find($id);
+        $id = $request->get('id') ?? null;
         if ($request->hasFile('document')) {
-            if ($post->document_path) {
-                File::delete(public_path($post->document_path));
-            }
             $file = $request->file('document');
             $fileName = time().'.'.$file->getClientOriginalExtension();
             $path = $file->move('post-documents/', $fileName);
             $request->merge(['document_path' => $path]);
         }
-        $post->update($request->all());
-        return response()->json('The post successfully updated');
+        if ($id) {
+            $post = Post::findOrFail($id);
+            if ($post->document_path && $request->hasFile('document')) {
+                File::delete(public_path($post->document_path));
+            }
+            $post->update($request->all());
+        }else {
+            $post = new Post($request->all());
+            $post->save();
+        }
+        return response()->json('The post successfully saved');
     }
     
     public function delete($id)
     {
-        $post = Post::find($id);
+        $post = Post::findOrFail($id);
         if ($post->document_path) {
             File::delete(public_path($post->document_path));
         }

@@ -1,6 +1,14 @@
 <template>
     <div>
-        <h3 class="text-center">All Posts</h3><br/>
+        <div class="row">
+            <div class="col-sm-10">
+                <h3>Posts List</h3>
+            </div>
+            <div class="col-sm-2">
+                <router-link to="/store" class="nav-item nav-link btn btn-secondary text-white">Add Post</router-link>
+            </div>
+        </div>
+        <br/>
         <table class="table table-bordered">
             <thead>
             <tr>
@@ -31,8 +39,8 @@
                 <td>{{ post.updated_at }}</td>
                 <td>
                     <div class="btn-group" role="group">
-                        <router-link :to="{name: 'edit', params: { id: post.id }}" class="btn btn-primary">Edit
-                        </router-link>
+                        <router-link :to="{name: 'store', params: { id: post.id }}" class="btn btn-primary">Edit</router-link>
+                        <!-- <router-link :to="{name: 'edit', params: { id: post.id }}" class="btn btn-primary">Edit</router-link> -->
                         <button class="btn btn-danger" @click="deletePost(post.id)">Delete</button>
                     </div>
                 </td>
@@ -50,7 +58,7 @@
         },
         created() {
             this.axios
-                .get('http://localhost:8000/api/posts')
+                .get('/api/posts')
                 .then(response => {
                     this.posts = response.data;
                 });
@@ -58,7 +66,7 @@
         methods: {
             deletePost(id) {
                 this.axios
-                    .delete(`http://localhost:8000/api/post/delete/${id}`)
+                    .delete(`/api/post/delete/${id}`)
                     .then(response => {
                         let i = this.posts.map(item => item.id).indexOf(id); // find index of your object
                         this.posts.splice(i, 1)
