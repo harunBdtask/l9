@@ -50,5 +50,6 @@
     "move_file": "Move file",
     "filesize": "4096",
     "filetype": "jpeg,jpg,png,gif,csv,txt,pdf,docx",
-    "post_vue": "Post vue"
+    "post_vue": "Post vue",
+    "notification_view": "Notification view"
 }

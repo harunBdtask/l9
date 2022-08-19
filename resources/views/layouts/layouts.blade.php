@@ -85,6 +85,36 @@
                     <!--/.sidebar toggle icon-->
                     <div class="navbar-icon d-flex">
                         <ul class="navbar-nav flex-row align-items-center">
+                            {{-- notification start --}}
+                            <li class="nav-item dropdown notification">
+                                <a class="nav-link dropdown-toggle material-ripple badge-dot" href="#"
+                                    data-toggle="dropdown">
+                                    <i class="typcn typcn-bell"></i>
+                                </a>
+                                <div class="dropdown-menu">
+                                    <h6 class="notification-title">Notifications</h6>
+                                    <p class="notification-text">You have 2 unread notification</p>
+                                    <div class="notification-list">
+                                        <div class="media new">
+                                            <div class="img-user"><img src="{{asset('assets')}}/dist/img/avatar.png" alt=""></div>
+                                            <div class="media-body">
+                                                <h6>Congratulate <strong>Socrates Itumay</strong> for work anniversaries
+                                                </h6>
+                                                <span>Mar 15 12:32pm</span>
+                                            </div>
+                                        </div>
+                                        <div class="media">
+                                            <div class="img-user"><img src="{{asset('assets')}}/dist/img/avatar4.png" alt=""></div>
+                                            <div class="media-body">
+                                                <h6><strong>Adrian Monino</strong> added new comment on your photo</h6>
+                                                <span>Mar 12 10:40pm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="dropdown-footer"><a href="{{ url('/show-notifications') }}">View All Notifications</a></div>
+                                </div>
+                            </li>
+                            {{-- notification end --}}
                             <li class="nav-item dropdown user-menu">
                                 <a class="nav-link dropdown-toggle material-ripple" href="#" data-toggle="dropdown">
                                     <i class="typcn typcn-user-add-outline"></i>
@@ -95,7 +125,7 @@
                                     </div>
                                     <div class="user-header">
                                         <div class="img-user">
-                                            <img src="assets/dist/img/avatar-1.jpg" alt="">
+                                            <img src="{{asset('assets')}}/dist/img/avatar-1.jpg" alt="">
                                         </div><!-- img-user -->
                                         <h6>{{ Auth::user()->name }}</h6>
                                         <span>{{ Auth::user()->email }}</span>
