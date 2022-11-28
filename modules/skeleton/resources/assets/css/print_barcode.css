@@ -1,0 +1,61 @@
+/* Print styling */
+
+@media print {
+  html,
+  body {
+    height: 99%;
+  }
+
+  body {
+    margin: 0;
+    padding: 0 !important;
+    min-width: 768px;
+    font-size: 10px;
+  }
+
+  a[href]:after {
+    content: none;
+  }
+
+  @page {
+    size: 67mm 37mm;
+  }
+
+  @page :left {
+    margin-left: 0px;
+  }
+
+  @page :right {
+    margin-left: 0px;
+  }
+
+  .padding {
+    padding: 0px;
+    margin: 0px;
+  }
+
+  .text-right {
+    text-align: right;
+  }
+  .text-left {
+    text-align: left;
+  }
+
+  .newpage {
+    page-break-after: always;
+  }
+
+  .noprint,
+  div.alert,
+  header,
+  .group-media,
+  .btn,
+  .footer,
+  form,
+  #comments,
+  .nav,
+  ul.links.list-inline,
+  ul.action-links {
+    display: none !important;
+  }
+}

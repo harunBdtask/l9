@@ -1,0 +1,31 @@
+{
+    "name": "skylarksoft/time-and-action",
+    "description": "Package For Time and Action Domain",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "shakil",
+            "email": "shakil@skylarksoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\TimeAndAction\\": "src",
+            "SkylarkSoft\\GoRMG\\TimeAndAction\\Database\\Seeds\\": "database/seeds/"
+        },
+        "classmap": [
+            "database/seeds"
+        ],
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\TimeAndAction\\ServiceProvider"
+            ]
+        }
+    }
+}

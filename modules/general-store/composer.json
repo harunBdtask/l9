@@ -1,0 +1,43 @@
+{
+    "name": "skylarksoft/general-store",
+    "description": "general-store  for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Shawon",
+            "email": "shawon@skylarksoft.com"
+        },
+        {
+            "name": "Durjoy",
+            "email": "durjoy@skylarksoft.com"
+        },
+        {
+            "name": "Shakil",
+            "email": "shakil@skylarksoft.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\GeneralStore\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\GeneralStore\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

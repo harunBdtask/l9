@@ -1,0 +1,28 @@
+{   
+    "name": "skylarksoft/skillmatrix",
+    "description": "Skill Matrix Module",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Nazmus Saqib Khan",
+            "email": "ratulkhan.jhenidah@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Skillmatrix\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Skillmatrix\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

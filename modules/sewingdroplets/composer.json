@@ -1,0 +1,40 @@
+{   
+    "name": "skylarksoft/sewingdroplets",
+    "description": "goRMG ERP PROTRACKER - Sewing Droplets",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Mizanur Rahman",
+            "email": "mizanur090148@gmail.com"
+        },
+        {
+            "name": "Md. Nazmus Saqib Khan",
+            "email": "ratulkhan.jhenidah@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "helpers/const.php",
+            "helpers/functions.php"
+        ],
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Sewingdroplets\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Sewingdroplets\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

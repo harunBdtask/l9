@@ -1,0 +1,31 @@
+{
+    "name": "skylarksoft/system-settings",
+    "description": "UI theme for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\SystemSettings\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ],
+        "files": [
+            "src/helpers.php"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\SystemSettings\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,29 @@
+{
+    "name": "skylarksoft/dyeing",
+    "description": "Dyeing Module for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Nazmus Saqib Khan",
+            "email": "ratulkhan.jhenidah@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Dyeing\\": "src",
+            "SkylarkSoft\\GoRMG\\Dyeing\\Database\\Factories\\": "database/factories"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Dyeing\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

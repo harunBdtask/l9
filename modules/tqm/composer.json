@@ -1,0 +1,36 @@
+{
+    "name": "skylarksoft/tqm",
+    "description": "goRMG ERP PROTRACKER - TQM",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Saqlain Mustaq Durjoy",
+            "email": "smdurjoy.cse@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "helpers/const.php",
+            "helpers/functions.php"
+        ],
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\TQM\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\TQM\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

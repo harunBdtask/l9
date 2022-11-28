@@ -1,0 +1,28 @@
+{
+    "name": "skylarksoft/planing",
+    "description": "Planing Module goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Planing\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Planing\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

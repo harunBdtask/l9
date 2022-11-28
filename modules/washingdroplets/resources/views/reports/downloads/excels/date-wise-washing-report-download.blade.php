@@ -1,0 +1,1 @@
+@include('washingdroplets::reports.table.date_wise_washing_report')

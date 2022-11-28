@@ -1,0 +1,36 @@
+{
+  "name": "skylarksoft/manual-production",
+  "description": "UI theme for goRMG ERP",
+  "license": "MIT",
+  "homepage": "https://skylarksoft.com",
+  "authors": [
+    {
+      "name": "Md. Asikur Islam",
+      "email": "md.asikurislam@gmail.com"
+    },
+    {
+      "name": "Md. Nazmus Saqib Khan",
+      "email": "ratulkhan.jhenidah@gmail.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "SkylarkSoft\\GoRMG\\ManualProduction\\": "src"
+    },
+    "classmap": [
+      "database/seeds"
+    ],
+    "files": [
+      "helpers/const.php",
+      "helpers/functions.php"
+    ]
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "SkylarkSoft\\GoRMG\\ManualProduction\\ServiceProvider"
+      ]
+    }
+  },
+  "minimum-stability": "dev"
+}

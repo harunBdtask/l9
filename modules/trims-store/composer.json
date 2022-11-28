@@ -1,0 +1,36 @@
+{
+    "name": "skylarksoft/trims-store",
+    "description": "Trims Store for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Shawon",
+            "email": "shawon@skylarksoft.com"
+        },
+        {
+            "name": "Shakil",
+            "email": "shakil@skylarksoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\TrimsStore\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\TrimsStore\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

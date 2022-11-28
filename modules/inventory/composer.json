@@ -1,0 +1,32 @@
+{
+    "name": "skylarksoft/inventory",
+    "description": "UI theme for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md.Yusuf Ali",
+            "email": "yousuf@skylarksoft.com"
+        },
+        {
+            "name": "Md. Shahidul Bhuiyan",
+            "email": "shawon@skylarksoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Inventory\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Inventory\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

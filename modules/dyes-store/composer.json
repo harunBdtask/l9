@@ -1,0 +1,36 @@
+{
+    "name": "skylarksoft/dyes-store",
+    "description": "dyes-store  for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Shawon",
+            "email": "shawon@skylarksoft.com"
+        },
+        {
+            "name": "Shakil",
+            "email": "shakil@skylarksoft.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\DyesStore\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\DyesStore\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,28 @@
+{   
+    "name": "skylarksoft/skeleton",
+    "description": "UI theme for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Skeleton\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Skeleton\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

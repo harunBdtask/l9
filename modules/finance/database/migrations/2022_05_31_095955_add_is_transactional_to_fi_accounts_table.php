@@ -1,0 +1,34 @@
+<?php
+
+use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
+
+class AddIsTransactionalToFiAccountsTable extends Migration
+{
+    /**
+     * Run the migrations.
+     *
+     * @return void
+     */
+    public function up()
+    {
+        Schema::table('fi_accounts', function (Blueprint $table) {
+            $table->tinyInteger('is_transactional')->default(1)
+                ->comment('1=YES, 0=NO')
+                ->after('status');
+        });
+    }
+
+    /**
+     * Reverse the migrations.
+     *
+     * @return void
+     */
+    public function down()
+    {
+        Schema::table('fi_accounts', function (Blueprint $table) {
+            $table->dropColumn('is_transactional');
+        });
+    }
+}

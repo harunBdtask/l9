@@ -1,0 +1,31 @@
+{
+    "name": "skylarksoft/merchandising",
+    "description": "UI theme for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "src/helpers.php"
+        ],
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Merchandising\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Merchandising\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

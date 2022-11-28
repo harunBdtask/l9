@@ -1,0 +1,1 @@
+@include('printembrdroplets::reports.tables.date_wise_report_modify_table')

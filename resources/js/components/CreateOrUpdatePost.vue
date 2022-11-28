@@ -14,7 +14,7 @@
                     </div>
                     <div class="form-group">
                         <label>Document</label>
-                        <input type="file" class="form-control" v-on:change="onFileChange" name="document">
+                        <input type="file" class="form-control" @input="onFileChange" name="document" ref="inputFile" />
                         <img
                             v-if="this.form.document_path"
                             width="30%"
@@ -62,7 +62,13 @@
         },
         methods: {
             onFileChange(e){
-                this.form.document = e.target.files[0];
+                let file = e.target.files[0];
+                if (file['size'] < (4098*1024) ) {
+                    this.form.document = file;
+                }else{
+                    alert('This file is over size than 4 MB');
+                    this.$refs.inputFile.value = null;
+                }
             },
             storeData(e) {
                 e.preventDefault();

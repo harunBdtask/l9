@@ -1,0 +1,40 @@
+{   
+    "name": "skylarksoft/washingdroplets",
+    "description": "goRMG ERP PROTRACKER - Washing Droplets",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Asikur Islam",
+            "email": "md.asikurislam@gmail.com"
+        },
+        {
+            "name": "Mizanur Rahman",
+            "email": "mizanur090148@gmail.com"
+        },
+        {
+            "name": "Md. Nazmus Saqib Khan",
+            "email": "ratulkhan.jhenidah@gmail.com"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "helpers/const.php",
+            "helpers/functions.php"
+        ],
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\Washingdroplets\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\Washingdroplets\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

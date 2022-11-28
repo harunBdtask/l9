@@ -1,0 +1,28 @@
+{   
+    "name": "skylarksoft/warehouse-management",
+    "description": "Warehouse Management Module for goRMG ERP",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Md. Nazmus Saqib Khan",
+            "email": "ratulkhan.jhenidah@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\WarehouseManagement\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\WarehouseManagement\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

@@ -1,0 +1,36 @@
+{
+    "name": "skylarksoft/hr",
+    "description": "Package For HR-KIT",
+    "license": "MIT",
+    "homepage": "https://skylarksoft.com",
+    "authors": [
+        {
+            "name": "Shakil Ahmmed",
+            "email": "shakil@skylarksoft.com"
+        },
+        {
+            "name": "Durjoy",
+            "email": "durjoy@skylarksoft.com"
+        },
+        {
+            "name": "Tawfique",
+            "email": ""
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SkylarkSoft\\GoRMG\\HR\\": "src"
+        },
+        "classmap": [
+            "database/seeds"
+        ]
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "SkylarkSoft\\GoRMG\\HR\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "dev"
+}

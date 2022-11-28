@@ -1,0 +1,1 @@
+@include('printembrdroplets::reports.tables.date_wise_print_factory_production_delivery_table')

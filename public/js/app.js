@@ -5414,7 +5414,14 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
   },
   methods: {
     onFileChange: function onFileChange(e) {
-      this.form.document = e.target.files[0];
+      var file = e.target.files[0];
+
+      if (file['size'] < 4098 * 1024) {
+        this.form.document = file;
+      } else {
+        alert('This file is over size than 4 MB');
+        this.$refs.inputFile.value = null;
+      }
     },
     storeData: function storeData(e) {
       e.preventDefault();
@@ -5666,13 +5673,14 @@ var render = function render() {
   })]), _vm._v(" "), _c("div", {
     staticClass: "form-group"
   }, [_c("label", [_vm._v("Document")]), _vm._v(" "), _c("input", {
+    ref: "inputFile",
     staticClass: "form-control",
     attrs: {
       type: "file",
       name: "document"
     },
     on: {
-      change: _vm.onFileChange
+      input: _vm.onFileChange
     }
   }), _vm._v(" "), this.form.document_path ? _c("img", {
     staticStyle: {
